@@ -56,7 +56,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 .price-item{flex:1}
 .price-label{font-size:11px;color:#999;display:block;margin-bottom:2px}
 .price-val{font-size:15px;font-weight:700}
-.price-val.guide{color:#999;text-decoration:line-through}
+.price-val.guide{color:#333}
 .price-val.sell{color:#E53935}
 .price-val.discount{color:#FF9800}
 .price-val.extra{color:#4CAF50}
@@ -106,8 +106,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 
 <!-- 品牌标签栏 v1.7 -->
 <div class="brand-tabs" id="brandTabs">
-  <button class="brand-tab active" data-brand="全部" onclick="selectBrand('全部')">全部</button>
-  <button class="brand-tab" data-brand="王朝" onclick="selectBrand('王朝')">🏯 王朝</button>
+  <button class="brand-tab active" data-brand="王朝" onclick="selectBrand('王朝')">🏯 王朝</button>
   <button class="brand-tab" data-brand="海洋" onclick="selectBrand('海洋')">🌊 海洋</button>
   <button class="brand-tab" data-brand="腾势" onclick="selectBrand('腾势')">🚙 腾势</button>
   <button class="brand-tab" data-brand="方程豹" onclick="selectBrand('方程豹')">🐆 方程豹</button>
@@ -131,7 +130,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 // ============================================================
 var DATA_URL = 'https://gist.githubusercontent.com/baolongjie/62c26b6e487aebc34611599dc740edfd/raw/car_data_v37.json';
 var allData = [];
-var currentBrand = '全部'; // 当前选中的品牌
+var currentBrand = '王朝'; // 当前选中的品牌
 var lastUpdateTime = null;
 
 // ============================================================
