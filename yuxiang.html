@@ -195,11 +195,13 @@ function enrich(raw){
     var series=(item['车系']||'');
     var model=(item['车型名称']||item['车型']||'');
     o._guide=item['指导价'];
-    o._gx=fmt(item._guide);
+    o._gx=null; o._yx=false;
     if(brand==='王朝'){
       var gx=getGx(series,model);
-      if(gx){o._gx=fmt(gx.gxPrice);o._yx=true;}
+      if(gx&&gx.gxPrice!==null&&gx.gxPrice!==undefined){o._gx=fmt(gx.gxPrice);o._yx=true;}
     }
+    // 其他品牌：从云端销售价取，null则显示暂无
+    if(!o._gx){o._gx=fmt(item['销售价'])||'<span style="color:#bbb">暂无</span>';}
     return o;
   });
 }
