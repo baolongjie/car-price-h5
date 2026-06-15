@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>🚗 车价数据编辑</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;background:#f5f6fa;min-height:100vh;padding-bottom:80px}
+.header{background:linear-gradient(135deg,#2E7D32,#1B5E20);padding:16px;position:sticky;top:0;z-index:100}
+.header h1{color:#fff;font-size:18px;font-weight:600;text-align:center}
+.sub-info{color:rgba(255,255,255,.7);font-size:12px;text-align:center;margin-top:4px}
+
+.toolbar{display:flex;gap:8px;padding:10px 14px;background:#fff;border-bottom:1px solid #eee;position:sticky;top:56px;z-index:99}
+.toolbar button{flex:1;padding:10px 8px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-add{background:#4CAF50;color:#fff}.btn-add:active{background:#388E3C}
+.btn-save{background:#1565C0;color:#fff}.btn-save:active{background:#0D47A1}
+.btn-back{background:#eee;color:#555}.btn-back:active{background:#ddd}
+.btn-del{background:#ff5252;color:#fff}.btn-del:active{background:#d32f2f}
+
+.stat-bar{padding:8px 16px;font-size:13px;color:#666;background:#fffef0;border-bottom:1px solid #ffe082;display:flex;justify-content:space-between;align-items:center}
+
+/* 搜索 */
+.search-bar{display:flex;gap:8px;padding:10px 14px;background:#fff}
+.search-bar input{flex:1;border:1px solid #ddd;border-radius:20px;padding:8px 14px;font-size:14px;outline:none}
+.search-bar input:focus{border-color:#4CAF50}
+
+/* 列表 */
+.list-wrap{padding:10px 12px}
+.card{background:#fff;border-radius:10px;margin-bottom:8px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.card-title{font-size:15px;font-weight:700;color:#333;flex:1}
+.card-brand{font-size:11px;padding:2px 8px;border-radius:10px;color:#fff;font-weight:600}
+.tag-王朝{background:#E65100}.tag-海洋{background:#0277BD}.tag-腾势{background:#1565C0}.tag-方程豹{background:#4CAF50}
+.card-actions{display:flex;gap:6px;margin-top:8px}
+.card-actions button{padding:6px 12px;border-radius:8px;border:none;font-size:12px;cursor:pointer;font-weight:600}
+.btn-edit{background:#e3f2fd;color:#1565C0}.btn-edit:active{background:#bbdefb}
+.btn-rm{background:#ffebee;color:#d32f2f}.btn-rm:active{background:#ffcdd2}
+
+/* 编辑弹窗 */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:999;display:flex;align-items:flex-end;justify-content:center}
+.modal-overlay.hidden{display:none}
+.modal{background:#fff;width:100%;max-width:500px;border-radius:16px 16px 0 0;padding:20px 16px;max-height:85vh;overflow-y:auto}
+.modal h2{font-size:17px;font-weight:700;margin-bottom:16px;text-align:center}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;font-size:13px;color:#666;margin-bottom:4px;font-weight:600}
+.form-group input,.form-group select{width:100%;border:1px solid #ddd;border-radius:10px;padding:10px 12px;font-size:15px;outline:none}
+.form-group input:focus,.form-group select:focus{border-color:#4CAF50}
+.form-row{display:flex;gap:10px}
+.form-row .form-group{flex:1}
+.modal-actions{display:flex;gap:10px;margin-top:16px}
+.modal-actions button{flex:1;padding:12px;border-radius:10px;border:none;font-size:15px;font-weight:600;cursor:pointer}
+.btn-cancel{background:#f5f5f5;color:#666}.btn-ok{background:#4CAF50;color:#fff}
+.btn-ok:active{background:#388E3C}
+
+/* Toast */
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 24px;border-radius:20px;font-size:14px;z-index:1999;opacity:0;transition:opacity .3s}
+.toast.show{opacity:1}
+
+/* 空状态 */
+.empty-tip{text-align:center;padding:60px 0;color:#bbb;font-size:16px}
+.loading-tip{text-align:center;padding:60px 0;color:#999;font-size:15px}
+.loading-tip .spinner{display:inline-block;width:30px;height:30px;border:3px solid #eee;border-top-color:#4CAF50;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* 确认对话框 */
+.confirm-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:1099;display:flex;align-items:center;justify-content:center}
+.confirm-overlay.hidden{display:none}
+.confirm-box{background:#fff;width:320px;border-radius:16px;padding:24px 20px;text-align:center}
+.confirm-box p{font-size:15px;color:#333;margin-bottom:20px;line-height:1.6}
+.confirm-box .c-btns{display:flex;gap:10px}
+.confirm-box .c-btns button{flex:1;padding:10px;border-radius:10px;border:none;font-size:14px;font-weight:600;cursor:pointer}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>✏️ 车价数据编辑</h1>
+  <div class="sub-info" id="subInfo">正在加载数据...</div>
+</div>
+
+<div class="toolbar">
+  <button class="btn-add" onclick="addCar()">➕ 新增车型</button>
+  <button class="btn-save" onclick="saveToGist()">💾 保存到云端</button>
+  <button class="btn-back" onclick="goBack()">🔙 返回查询</button>
+</div>
+
+<div class="stat-bar" id="statBar">
+  <span id="statText">共 0 条数据</span>
+  <span style="font-size:11px;color:#999">修改后需点保存</span>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="搜索车系/车型..." oninput="renderEditList()">
+</div>
+
+<div class="list-wrap" id="listWrap"><div class="loading-tip"><div class="spinner"></div><br>加载中...</div></div>
+
+<!-- 编辑弹窗 -->
+<div class="modal-overlay hidden" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal">
+    <h2 id="modalTitle">编辑车型</h2>
+    <div id="modalBody"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">取消</button>
+      <button class="btn-ok" onclick="confirmEdit()">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- 删除确认 -->
+<div class="confirm-overlay hidden" id="confirmOverlay">
+  <div class="confirm-box">
+    <p id="confirmText">确认删除该车型？</p>
+    <div class="c-btns">
+      <button class="btn-cancel" onclick="hideConfirm()">取消</button>
+      <button class="btn-ok" style="background:#d32f2f;color:#fff" onclick="doConfirmDelete()">删除</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+//  配置
+// ============================================================
+var DATA_URL = 'https://gist.githubusercontent.com/baolongjie/62c26b6e487aebc34611599dc740edfd/raw/car_data_v37.json';
+var GIST_ID = '62c26b6e487aebc34611599dc740edfd';
+var GIST_FILENAME = 'car_data_v37.json';
+// ⚠️ 注意：GitHub Token 有权限限制，如果保存失败需要更新 token
+var GITHUB_TOKEN = ''; // 将在运行时从 URL 参数或 localStorage 获取
+
+var rawData = [];     // 原始 JSON 数组
+var editData = [];    // 可编辑副本
+var editingIndex = -1; // 当前编辑的索引（-1=新增）
+var deleteIndex = -1; // 待删除索引
+var changed = false;  // 是否有改动
+
+// ============================================================
+//  Token 管理
+// ============================================================
+function getToken(){
+  // 优先从 URL 参数获取
+  var m = location.href.match(/[?&]token=([^&]+)/);
+  if(m) return decodeURIComponent(m[1]);
+  // 其次从 localStorage
+  return localStorage.getItem('car_edit_token') || '';
+}
+
+function saveToken(t){
+  if(t) localStorage.setItem('car_edit_token', t);
+}
+
+function promptToken(){
+  var t = prompt('请输入 GitHub Personal Access Token（用于保存数据到 Gist）：\n\n需要 gist 权限', getToken() || '');
+  if(t !== null){
+    saveToken(t);
+    GITHUB_TOKEN = t;
+    return t;
+  }
+  return '';
+}
+
+// ============================================================
+//  数据加载
+// ============================================================
+function loadData(){
+  fetch(DATA_URL, {cache:'no-cache'})
+    .then(function(r){
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return r.json();
+    })
+    .then(function(json){
+      rawData = json || [];
+      editData = JSON.parse(JSON.stringify(rawData)); // 深拷贝
+      changed = false;
+      updateStat();
+      renderEditList();
+      document.getElementById('subInfo').textContent = '已加载 · 最后更新：'+new Date().toLocaleString('zh-CN');
+    })
+    .catch(function(err){
+      document.getElementById('listWrap').innerHTML = '<div class="empty-tip">😅 加载失败<br><br><span style="font-size:13px;color:#999">'+err.message+'</span><br><br><button onclick="loadData()" style="padding:8px 20px;background:#4CAF50;color:#fff;border:none;border-radius:20px;font-size:13px">重试</button></div>';
+    });
+}
+
+// ============================================================
+//  渲染编辑列表
+// ============================================================
+function renderEditList(){
+  var kw = document.getElementById('searchInput').value.trim().toLowerCase();
+  var list = editData;
+  if(kw){
+    list = list.filter(function(item){
+      var t = [item['车系']||'', item['车型']||'', item['品牌']||''].join(' ').toLowerCase();
+      return t.indexOf(kw) >= 0;
+    });
+  }
+
+  document.getElementById('statText').textContent = '共 '+editData.length+' 条' + (kw ? ' · 找到 '+list.length+' 条' : '');
+
+  var w = document.getElementById('listWrap');
+  if(list.length === 0){
+    w.innerHTML = '<div class="empty-tip">'+(editData.length===0?'暂无数据':'未找到匹配')+'</div>';
+    return;
+  }
+
+  w.innerHTML = list.map(function(item, idx){
+    var origIdx = editData.indexOf(item);
+    return '<div class="card">'+
+      '<div class="card-head">'+
+        '<span class="card-title">'+esc(item['车系']||'') + ' ' + esc(item['车型']||'')+'</span>'+
+        '<span class="card-brand tag-'+(item['品牌']||'')+'">'+esc(item['品牌']||'')+'</span>'+
+      '</div>'+
+      '<div style="font-size:13px;color:#666;margin-bottom:6px">'+
+        '指导价：<b style="color:#333">¥'+fmtNum(item['指导价'])+'</b>'+
+        (item['销售价'] ? ' &nbsp; 销售价：<b style="color:#E53935">¥'+fmtNum(item['销售价'])+'</b>' : '')+
+      '</div>'+
+      '<div class="card-actions">'+
+        '<button class="btn-edit" onclick="editCar('+origIdx+')">✏️ 编辑</button>'+
+        '<button class="btn-rm" onclick="askDelete('+origIdx+')">🗑️ 删除</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function fmtNum(v){ if(v==null)return '-'; var n=parseInt(v); return isNaN(n)?v:n.toLocaleString('zh-CN'); }
+
+function esc(s){ var d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+
+// ============================================================
+//  更新统计
+// ============================================================
+function updateStat(){
+  document.getElementById('statText').textContent = '共 '+editData.length+' 条' + (changed ? ' ⚠️ 未保存' : '');
+}
+
+// ============================================================
+//  新增
+// ============================================================
+function addCar(){
+  editingIndex = -1;
+  showForm({
+    '车系': '', '车型': '', '品牌': '王朝',
+    '指导价': '', '销售价': null,
+    '备案优惠(不含超级置换)': '',
+    '超级置换': '', '保养赠送': ''
+  }, '新增车型');
+}
+
+// ============================================================
+//  编辑
+// ============================================================
+function editCar(idx){
+  editingIndex = idx;
+  showForm(editData[idx], '编辑车型');
+}
+
+// ============================================================
+//  显示表单
+// ============================================================
+function showForm(data, title){
+  document.getElementById('modalTitle').textContent = title;
+  var brands = ['王朝','海洋','腾势','方程豹'];
+  var brandOptions = brands.map(function(b){
+    return '<option value="'+b+'"'+(data['品牌']===b?' selected':')+'>'+b+'</option>';
+  }).join('');
+
+  document.getElementById('modalBody').innerHTML =
+    '<div class="form-group"><label>品牌 *</label><select id="f_brand">'+brandOptions+'</select></div>'+
+    '<div class="form-group"><label>车系 *</label><input type="text" id="f_series" value="'+esc(data['车系']||'')+'" placeholder="如：钛7"></div>'+
+    '<div class="form-group"><label>车型名称 *</label><input type="text" id="f_model" value="'+esc(data['车型']||'')+'" placeholder="如：135KM两驱PRO版"></div>'+
+    '<div class="form-row">'+
+      '<div class="form-group"><label>指导价 *</label><input type="number" id="f_guide" value="'+(data['指导价']||'')+'" placeholder="数字"></div>'+
+      '<div class="form-group"><label>销售价</label><input type="number" id="f_sell" value="'+(data['销售价']||'')+'" placeholder="无则留空"></div>'+
+    '</div>'+
+    '<div class="form-group"><label>备案优惠</label><input type="text" id="f_discount" value="'+esc(data['备案优惠(不含超级置换)']||'')+'" placeholder="选填"></div>'+
+    '<div class="form-group"><label>超级置换</label><input type="text" id="f_super" value="'+esc(data['超级置换']||'')+'" placeholder="选填"></div>'+
+    '<div class="form-group"><label>保养赠送</label><input type="text" id="f_gift" value="'+esc(data['保养赠送']||'')+'" placeholder="选填"></div>';
+
+  document.getElementById('modalOverlay').classList.remove('hidden');
+}
+
+function closeModal(){ document.getElementById('modalOverlay').classList.add('hidden'); }
+
+// ============================================================
+//  确认编辑/新增
+// ============================================================
+function confirmEdit(){
+  var data = {
+    '车系': document.getElementById('f_series').value.trim(),
+    '车型': document.getElementById('f_model').value.trim(),
+    '品牌': document.getElementById('f_brand').value,
+    '指导价': parseInt(document.getElementById('f_guide').value) || 0,
+    '销售价': document.getElementById('f_sell').value ? parseInt(document.getElementById('f_sell').value) : null,
+    '备案优惠(不含超级置换)': document.getElementById('f_discount').value.trim() || null,
+    '超级置换': document.getElementById('f_super').value.trim() || null,
+    '保养赠送': document.getElementById('f_gift').value.trim() || null
+  };
+
+  if(!data['车系'] || !data['车型']){
+    toast('⚠️ 请填写车系和车型名称'); return;
+  }
+  if(!data['指导价']){
+    toast('⚠️ 请填写指导价'); return;
+  }
+
+  if(editingIndex === -1){
+    editData.push(data);
+    toast('✅ 已添加');
+  } else {
+    editData[editingIndex] = data;
+    toast('✅ 已更新');
+  }
+
+  changed = true;
+  closeModal();
+  updateStat();
+  renderEditList();
+}
+
+// ============================================================
+//  删除
+// ============================================================
+function askDelete(idx){
+  deleteIndex = idx;
+  var item = editData[idx];
+  document.getElementById('confirmText').textContent = '确认删除「'+esc(item['车系'])+' '+esc(item['车型'])+'」？';
+  document.getElementById('confirmOverlay').classList.remove('hidden');
+}
+
+function hideConfirm(){ document.getElementById('confirmOverlay').classList.add('hidden'); }
+
+function doConfirmDelete(){
+  if(deleteIndex >= 0){
+    editData.splice(deleteIndex, 1);
+    changed = true;
+    toast('🗑️ 已删除');
+    updateStat();
+    renderEditList();
+  }
+  hideConfirm();
+}
+
+// ============================================================
+//  保存到 Gist
+// ============================================================
+async function saveToGist(){
+  var token = getToken();
+  if(!token){
+    token = promptToken();
+    if(!token) return;
+  }
+
+  toast('⏳ 正在保存...');
+  var btn = document.querySelector('.btn-save');
+  btn.textContent = '⏳ 保存中...';
+  btn.disabled = true;
+
+  try {
+    // 1. 获取当前 Gist 信息（拿到文件 SHA）
+    var gistResp = await fetch('https://api.github.com/gists/'+GIST_ID, {
+      headers: {'Authorization': 'token '+token}
+    });
+    if(!gistResp.ok) throw new Error('Token 无效或无权限（HTTP '+gistResp.status+'）');
+    var gist = await gistResp.json();
+    var fileSha = gist.files[GIST_FILENAME] ? gist.files[GIST_FILENAME].sha : null;
+
+    // 2. 构建新内容
+    var jsonContent = JSON.stringify(editData, null, 2);
+    var base64 = btoa(unescape(encodeURIComponent(jsonContent)));
+
+    // 3. 通过 API 更新
+    var body = {
+      description: '比亚迪车价数据（在线编辑）',
+      files: {}
+    };
+    body.files[GIST_FILENAME] = { content: jsonContent };
+
+    var putResp = await fetch('https://api.github.com/gists/'+GIST_ID, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': 'token '+token,
+        'Accept': 'application/vnd.github.v3+json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if(!putResp.ok){
+      var errText = '';
+      try{ var ej = await putResp.json(); errText = ej.message || ''; }catch(e){}
+      throw new Error('保存失败（HTTP '+putResp.status+'）'+errText);
+    }
+
+    rawData = JSON.parse(JSON.stringify(editData));
+    changed = false;
+    updateStat();
+    toast('💾 保存成功！H5页面刷新即可看到最新数据');
+
+  } catch(err){
+    toast('❌ '+err.message);
+    console.error('[Save error]', err);
+  } finally {
+    btn.textContent = '💾 保存到云端';
+    btn.disabled = false;
+  }
+}
+
+// ============================================================
+//  返回查询页
+// ============================================================
+function goBack(){
+  if(changed && !confirm('有未保存的改动，确定离开？')) return;
+  location.href = 'index.html?v=2';
+}
+
+// ============================================================
+//  Toast
+// ============================================================
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+
+// ============================================================
+//  初始化
+// ============================================================
+loadData();
+</script>
+</body>
+</html>
