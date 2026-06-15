@@ -8,81 +8,69 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;background:#f5f6fa;min-height:100vh}
 .header{background:linear-gradient(135deg,#2E7D32,#1B5E20);padding:14px 16px 12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.header h1{color:#fff;font-size:18px;font-weight:600;text-align:center;margin-bottom:10px;letter-spacing:1px}
-.header .sub{color:rgba(255,255,255,.7);font-size:11px;text-align:center}
-.search-bar{display:flex;gap:8px;align-items:center}
+.header h1{color:#fff;font-size:18px;font-weight:600;text-align:center;margin-bottom:6px;letter-spacing:1px}
+.header .sub{color:rgba(255,255,255,.75);font-size:11px;text-align:center;line-height:1.5}
+.search-bar{display:flex;gap:8px;align-items:center;margin-top:10px}
 .search-box{flex:1;background:#fff;border-radius:20px;display:flex;align-items:center;padding:0 14px;height:38px}
 .search-box input{flex:1;border:none;outline:none;font-size:15px;color:#333;background:transparent}
 .search-box input::placeholder{color:#aaa}
 .clear-btn{width:20px;height:20px;background:#ccc;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:12px;color:#fff;cursor:pointer;flex-shrink:0}
 .search-btn{background:#FF9800;color:#fff;border:none;border-radius:20px;padding:0 16px;height:38px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap}
-.brand-tabs{display:flex;gap:6px;padding:8px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:#fff;border-bottom:1px solid #eee;position:sticky;top:60px;z-index:99}
+.brand-tabs{display:flex;gap:6px;padding:8px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:#fff;border-bottom:1px solid #eee;position:sticky;top:68px;z-index:99}
 .brand-tabs::-webkit-scrollbar{display:none}
 .brand-tab{flex-shrink:0;padding:6px 14px;border-radius:16px;font-size:13px;font-weight:600;color:#555;background:#f0f0f0;border:none;cursor:pointer;transition:all .2s;white-space:nowrap}
-.brand-tab.active{background:#2E7D32;color:#fff;box-shadow:0 2px 6px rgba(46,125,50,.3)}
-.brand-tab:hover:not(.active){background:#e0e0e0}
+.brand-tab.active{box-shadow:0 2px 6px rgba(0,0,0,.15)}
 .brand-tab[data-brand="全部"].active{background:#4CAF50;color:#fff}
 .brand-tab[data-brand="王朝"].active{background:#E65100;color:#fff}
 .brand-tab[data-brand="海洋"].active{background:#0277BD;color:#fff}
 .brand-tab[data-brand="腾势"].active{background:#1565C0;color:#fff}
 .brand-tab[data-brand="方程豹"].active{background:#4CAF50;color:#fff}
+.brand-tab:hover:not(.active){background:#e0e0e0}
 .stat-bar{padding:10px 16px;font-size:13px;color:#666;background:#fff;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
-.stat-bar .refresh-info{font-size:11px;color:#999}
-.stat-bar .refresh-btn{background:none;border:1px solid #ddd;color:#666;padding:2px 10px;border-radius:10px;font-size:11px;cursor:pointer}
-.stat-bar .refresh-btn:active{background:#eee}
 .stat-bar .loading-dot{display:inline-block;width:6px;height:6px;background:#2E7D32;border-radius:50%;animation:blink 1s infinite;margin-right:4px;vertical-align:middle}
 @keyframes blink{50%{opacity:.3}}
+.refresh-btn{background:none;border:1px solid #ddd;color:#666;padding:2px 10px;border-radius:10px;font-size:11px;cursor:pointer}
 .list-wrap{padding:10px 12px 20px}
-.card{background:#fff;border-radius:12px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06);transition:transform .15s}
-.card:active{transform:scale(.98)}
-.card-header{display:flex;justify-content:space-between;align-items:center;padding:12px 14px 8px;border-bottom:1px solid #f0f0f0}
-.car-series{font-size:15px;font-weight:700;color:#2E7D32;flex:1}
-.car-brand{font-size:11px;padding:2px 8px;border-radius:10px;color:#fff;font-weight:600;flex-shrink:0;margin-left:8px}
-.tag-腾势{background:#1565C0}.tag-比亚迪{background:#FF9800}.tag-方程豹{background:#4CAF50}.tag-王朝{background:#E65100}.tag-海洋{background:#0277BD}
-.card-model{padding:6px 14px 8px;font-size:14px;color:#444;font-weight:500}
-.card-body{padding:8px 14px 10px}
-.price-row{display:flex;gap:12px;margin-bottom:6px}
-.price-item{flex:1}
-.price-label{font-size:11px;color:#999;display:block;margin-bottom:2px}
-.price-val{font-size:15px;font-weight:700}
-.price-val.guide{color:#333}
-.price-val.sell{color:#E53935}
-.price-val.discount{color:#FF9800}
-.price-val.extra{color:#4CAF50}
-/* 宇翔专用标记 */
-.price-val.yx-sell{color:#2E7D32;font-size:16px}
-.gift-row{background:#E8F5E9;border-radius:6px;padding:6px 10px;margin-top:6px;font-size:12px;color:#2E7D50;display:flex;gap:4px}
-.gift-val{color:#1B5E20}
-.card-footer{padding:8px 14px;background:#fafafa;font-size:11px;color:#999;border-top:1px solid #f0f0f0}
+.card{background:#fff;border-radius:12px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.card-hd{display:flex;justify-content:space-between;align-items:center;padding:12px 14px 8px;border-bottom:1px solid #f0f0f0}
+.series{font-size:15px;font-weight:700;color:#2E7D32;flex:1}
+.brand-tag{font-size:11px;padding:2px 8px;border-radius:10px;color:#fff;font-weight:600;flex-shrink:0;margin-left:8px}
+.tag-王朝{background:#E65100}.tag-海洋{background:#0277BD}.tag-腾势{background:#1565C0}.tag-方程豹{background:#4CAF50}
+.model{padding:6px 14px 4px;font-size:14px;color:#444;font-weight:500}
+.price-grid{padding:8px 14px 4px;display:flex;gap:8px;flex-wrap:wrap}
+.price-chip{flex:1;min-width:90px;background:#f8f9fa;border-radius:8px;padding:6px 10px}
+.price-label{font-size:10px;color:#999;display:block;margin-bottom:2px}
+.price-num{font-size:14px;font-weight:700}
+.price-num.guide{color:#555}
+.price-num.sell{color:#E53935}
+.price-num.yx-sell{color:#2E7D32;font-size:16px}
+/* 广宣价角标 */
+.yx-badge{display:inline-block;font-size:9px;padding:1px 5px;border-radius:6px;background:#E8F5E9;color:#2E7D32;font-weight:700;margin-left:3px;vertical-align:middle}
+/* 备注行 */
+.note-row{padding:6px 14px 10px;font-size:11px;color:#999}
+.note-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:6px;font-weight:600;margin-right:4px}
+.note-tag含{background:#fff3e0;color:#E65100}
+.note-tag不含{background:#e3f2fd;color:#0277BD}
+.note-tag备{background:#f3e5f5;color:#7B1FA2}
+/* 卡片底部 */
+.card-ft{padding:8px 14px;background:#fafafa;font-size:11px;color:#999;border-top:1px solid #f0f0f0}
+/* 其他品牌优惠 */
+.yh-row{display:flex;gap:8px;padding:4px 14px 8px;flex-wrap:wrap}
+.yh-chip{flex:1;min-width:90px;background:#f8f9fa;border-radius:8px;padding:6px 10px}
+.yh-label{font-size:10px;color:#999;display:block;margin-bottom:2px}
+.yh-num{font-size:14px;font-weight:700;color:#FF9800}
 .empty-tip{text-align:center;padding:60px 0;color:#bbb;font-size:16px}
 .loading-tip{text-align:center;padding:60px 0;color:#999;font-size:15px}
-.loading-tip .spinner{display:inline-block;width:30px;height:30px;border:3px solid #eee;border-top-color:#2E7D32;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:12px}
+.spinner{display:block;width:30px;height:30px;border:3px solid #eee;border-top-color:#2E7D32;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.footer{text-align:center;padding:20px;font-size:12px;color:#bbb}
-/* 品牌首页 */
-.brand-home{padding:20px 16px;text-align:center}
-.brand-home h2{font-size:20px;color:#333;margin-bottom:6px}
-.brand-home p{font-size:13px;color:#888;margin-bottom:24px}
-.brand-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:400px;margin:0 auto}
-.brand-card{background:#fff;border-radius:16px;padding:24px 16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.08);cursor:pointer;transition:all .2s;border:2px solid transparent}
-.brand-card:active{transform:scale(.95)}
-.brand-card .brand-icon{font-size:40px;margin-bottom:8px}
-.brand-card .brand-name{font-size:17px;font-weight:700;color:#333}
-.brand-card .brand-count{font-size:12px;color:#999;margin-top:4px}
-.brand-card.wangchao{border-color:#E65100}.brand-card.wangchao .brand-name{color:#E65100}
-.brand-card.haiyang{border-color:#0277BD}.brand-card.haiyang .brand-name{color:#0277BD}
-.brand-card.tengshi{border-color:#1565C0}.brand-card.tengshi .brand-name{color:#1565C0}
-.brand-card.fcb{border-color:#4CAF50}.brand-card.fcb .brand-name{color:#4CAF50}
-.brand-card.all{border-color:#2E7D32}.brand-card.all .brand-name{color:#2E7D32}
-/* 广宣价标记 */
-.yx-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;background:#E8F5E9;color:#2E7D32;font-weight:600;margin-left:4px;vertical-align:middle}
+.footer{text-align:center;padding:20px;font-size:12px;color:#ccc}
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>🚗 宇翔专用·车价查询</h1>
-  <div class="sub">王朝销售价以广宣价为准 · 数据来源佛山大区备案表</div>
+  <div class="sub">王朝销售价以广宣价为准 · 广宣优惠含/不含超级置换补贴已标注<br>数据来源：佛山大区活动备案表</div>
   <div class="search-bar">
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="搜索车系/车型..." oninput="onInput()">
@@ -100,14 +88,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
   <button class="brand-tab" data-brand="方程豹" onclick="selectBrand('方程豹')">🐆 方程豹</button>
 </div>
 
-<div class="stat-bar" id="statBar">
+<div class="stat-bar">
   <span id="statText">正在加载...</span>
   <button class="refresh-btn" onclick="loadCloudData()">🔄 刷新</button>
 </div>
 
-<div class="list-wrap" id="listWrap"><div class="loading-tip"><div class="spinner"></div><br>正在从云端加载数据...</div></div>
+<div class="list-wrap" id="listWrap">
+  <div class="loading-tip"><div class="spinner"></div>正在从云端加载数据...</div>
+</div>
 
-<div class="footer">宇翔专用版 · 王朝广宣价覆盖 &nbsp;|&nbsp; 云端实时同步</div>
+<div class="footer">宇翔专用版 · 王朝广宣价 &nbsp;|&nbsp; 云端实时同步</div>
 
 <script>
 // ============================================================
@@ -118,203 +108,147 @@ var allData = [];
 var currentBrand = '全部';
 var lastUpdateTime = null;
 
-// 广宣价映射（车系|车型 => 广宣价）
-// 从Excel解析的王朝广宣价数据，内嵌到页面
+// ============================================================
+//  Excel广宣价数据 [车系, 车型, 指导价, 广宣价, 广宣优惠(含超换)]
+// ============================================================
+var GX_DATA = [
+["2026款秦PLUS DM-i","128KM进取型",79800,74800,5000],
+["2026款秦PLUS DM-i","210KM进取型",89800,84800,5000],
+["2026款秦PLUS DM-i","210KM超越型",99800,94800,5000],
+["第二代秦PLUS EV智驾版","420KM进取型",89800,87800,2000],
+["第二代秦PLUS EV智驾版","510KM进取型",99800,97800,2000],
+["第二代秦PLUS EV智驾版","510KM领先型",119800,107800,12000],
+["2026款秦L DM-i","128KM进取型",96800,89800,7000],
+["2026款秦L DM-i","128KM领先型",106800,99800,7000],
+["2026款秦L DM-i","210KM超越型",116800,109800,7000],
+["2026款秦L DM-i","210KM云辇型",126800,119800,7000],
+["秦L EV","470KM领先型",119800,107800,12000],
+["秦L EV","545KM超越型",129800,117800,12000],
+["秦L EV","545KM云辇型",139800,127800,12000],
+["2026款宋L DM-i","130KM超越型",139800,136800,3000],
+["2026款宋L DM-i","200KM超越型",146800,143800,3000],
+["2026款宋L DM-i","200KM卓越型",156800,153800,3000],
+["2026款宋Pro DM-i","133KM进取型",102800,97800,5000],
+["2026款宋Pro DM-i","133KM超越型",112800,107800,5000],
+["2026款宋Pro DM-i","220KM超越型",122800,117800,5000],
+["2026款宋Pro DM-i","220KM卓越型",130800,125800,5000],
+["宋Pro DM-i飞驰版","220KM领先型",102900,99900,3000],
+["宋Pro DM-i飞驰版","220KM超越型",115900,112900,3000],
+["宋Pro DM-i飞驰版","301KM超越型",118900,115900,3000],
+["宋Pro DM-i飞驰版","301KM卓越型",132900,129900,3000],
+["宋L EV智驾版","550KM卓越型",189800,179800,10000],
+["宋L EV智驾版","662KM超越型",199800,189800,10000],
+["宋L EV智驾版","662KM卓越智驾型",225800,215800,10000],
+["宋L EV智驾版","602KM四驱智驾型",249800,239800,10000],
+["宋Ultra EV","605KM领先型",151900,151900,0],
+["宋Ultra EV","605KM超越型",159900,159900,0],
+["宋Ultra EV","710KM超越型",169900,169900,0],
+["宋Ultra EV","710KM卓越型",179900,179900,0],
+["元UP智驾版","301KM领航型",74800,69800,5000],
+["元UP智驾版","401KM活力型",99800,84800,15000],
+["元UP智驾版","401KM领先型",109800,94800,15000],
+["元UP智驾版","401KM超越型",119800,104800,15000],
+["第二代元PLUS智驾版","430KM领先型",115800,109800,6000],
+["第二代元PLUS智驾版","430KM超越型",122800,116800,6000],
+["第二代元PLUS智驾版","510KM领先型",125800,119800,6000],
+["第二代元PLUS智驾版","510KM超越型",135800,129800,6000],
+["第二代元PLUS智驾版","510KM卓越型",145800,139800,6000],
+["第三代元PLUS","540KM领先型",119900,119900,0],
+["第三代元PLUS","540KM超越型",129900,129900,0],
+["第三代元PLUS","630KM超越型",142900,142900,0],
+["第三代元PLUS","630KM卓越型",149900,149900,0],
+["宋Ultra DM-i","205KM领先型",129900,129900,0],
+["宋Ultra DM-i","205KM超越型",139900,139900,0],
+["宋Ultra DM-i","310KM领先型",139900,139900,0],
+["宋Ultra DM-i","310KM超越型",149900,149900,0],
+["宋Ultra DM-i","310KM卓越型",159900,159900,0],
+["2026款夏","100KM进取型",206800,194800,12000],
+["2026款夏","100KM超越型",219800,207800,12000],
+["2026款夏","218KM超越型",246800,234800,12000],
+["2026款夏","218KM卓越型",269800,257800,12000],
+["汉DM-i智驾版","245KM舒适型",169800,156800,13000],
+["汉DM-i智驾版","245KM尊贵型",179800,166800,13000],
+["汉DM-i智驾版","245KM尊荣型",189800,176800,13000],
+["汉DM-i智驾版","245KM激光雷达旗舰型",199800,186800,13000],
+["汉EV智驾版","635KM旗舰型",183800,171800,12000],
+["汉EV智驾版","635KM激光雷达旗舰型",195800,183800,12000],
+["汉EV智驾版","705KM激光雷达旗舰型",215800,203800,12000],
+["汉EV闪充版","705KM闪充尊贵型",179800,179800,0],
+["汉EV闪充版","705KM闪充尊荣型",187800,187800,0],
+["唐DM-i智驾版","115KM尊贵型",179800,156800,23000],
+["唐DM-i智驾版","175KM尊贵型",179800,166800,13000],
+["唐DM-i智驾版","175KM尊荣型",189800,176800,13000],
+["唐DM-i智驾版","175KM激光雷达旗舰型",199800,186800,13000],
+["汉L DM","200KM激光雷达尊享型",209800,191800,18000],
+["汉L DM","200KM激光雷达旗舰型",229800,211800,18000],
+["汉L DM","四驱激光雷达旗舰型",259800,241800,18000],
+["汉L EV","701KM激光雷达尊享型",219800,202800,17000],
+["汉L EV","701KM激光雷达旗舰型",239800,222800,17000],
+["汉L EV","四驱激光雷达旗舰型",279800,262800,17000],
+["唐L DM","215KM激光雷达旗舰型",229800,211800,18000],
+["唐L DM","200KM四驱激光雷达旗舰型",249800,231800,18000],
+["唐L DM","无人机玩家版",285800,267800,18000],
+["唐L EV","670KM激光雷达尊享型",239800,222800,17000],
+["唐L EV","670KM激光雷达旗舰型",259800,242800,17000],
+["唐L EV","四驱激光雷达旗舰型",289800,272800,17000]
+];
+
+// 快速查询表：车系+车型 => {gxPrice, gxYh}
 var GX_MAP = {};
-
-// ============================================================
-//  加载广宣价映射
-// ============================================================
-function loadGxMap(){
-  // 内嵌数据 - 从佛山大区备案表E列提取
-  var raw = [
-["2026款秦PLUS DM-i","128KM进取型",74800],
-["2026款秦PLUS DM-i","210KM进取型",84800],
-["2026款秦PLUS DM-i","210KM超越型",94800],
-["第二代秦PLUS EV智驾版","420KM进取型",87800],
-["第二代秦PLUS EV智驾版","510KM进取型",97800],
-["第二代秦PLUS EV智驾版","510KM领先型",107800],
-["2026款秦L DM-i","128KM进取型",89800],
-["2026款秦L DM-i","128KM领先型",99800],
-["2026款秦L DM-i","210KM超越型",109800],
-["2026款秦L DM-i","210KM云辇型",119800],
-["秦L EV","470KM领先型",107800],
-["秦L EV","545KM超越型",117800],
-["秦L EV","545KM云辇型",127800],
-["2026款宋L DM-i","130KM超越型",136800],
-["2026款宋L DM-i","200KM超越型",143800],
-["2026款宋L DM-i","200KM卓越型",153800],
-["2026款宋Pro DM-i","133KM进取型",97800],
-["2026款宋Pro DM-i","133KM超越型",107800],
-["2026款宋Pro DM-i","220KM超越型",117800],
-["2026款宋Pro DM-i","220KM卓越型",125800],
-["宋Pro DM-i飞驰版","220KM领先型",99900],
-["宋Pro DM-i飞驰版","220KM超越型",112900],
-["宋Pro DM-i飞驰版","301KM超越型",115900],
-["宋Pro DM-i飞驰版","301KM卓越型",129900],
-["宋L EV智驾版","550KM卓越型",179800],
-["宋L EV智驾版","662KM超越型",189800],
-["宋L EV智驾版","662KM卓越智驾型",215800],
-["宋L EV智驾版","602KM四驱智驾型",239800],
-["宋Ultra EV","605KM领先型",151900],
-["宋Ultra EV","605KM超越型",159900],
-["宋Ultra EV","710KM超越型",169900],
-["宋Ultra EV","710KM卓越型",179900],
-["元UP智驾版","301KM领航型",69800],
-["元UP智驾版","401KM活力型",84800],
-["元UP智驾版","401KM领先型",94800],
-["元UP智驾版","401KM超越型",104800],
-["第二代元PLUS智驾版","430KM领先型",109800],
-["第二代元PLUS智驾版","430KM超越型",116800],
-["第二代元PLUS智驾版","510KM领先型",119800],
-["第二代元PLUS智驾版","510KM超越型",129800],
-["第二代元PLUS智驾版","510KM卓越型",139800],
-["第三代元PLUS","540KM领先型",119900],
-["第三代元PLUS","540KM超越型",129900],
-["第三代元PLUS","630KM超越型",142900],
-["第三代元PLUS","630KM卓越型",149900],
-["宋Ultra DM-i","205KM领先型",129900],
-["宋Ultra DM-i","205KM超越型",139900],
-["宋Ultra DM-i","310KM领先型",139900],
-["宋Ultra DM-i","310KM超越型",149900],
-["宋Ultra DM-i","310KM卓越型",159900],
-["2026款夏","100KM进取型",194800],
-["2026款夏","100KM超越型",207800],
-["2026款夏","218KM超越型",234800],
-["2026款夏","218KM卓越型",257800],
-["汉DM-i智驾版","245KM舒适型",156800],
-["汉DM-i智驾版","245KM尊贵型",166800],
-["汉DM-i智驾版","245KM尊荣型",176800],
-["汉DM-i智驾版","245KM激光雷达旗舰型",186800],
-["汉EV智驾版","635KM旗舰型",171800],
-["汉EV智驾版","635KM激光雷达旗舰型",183800],
-["汉EV智驾版","705KM激光雷达旗舰型",203800],
-["汉EV闪充版","705KM闪充尊贵型",179800],
-["汉EV闪充版","705KM闪充尊荣型",187800],
-["唐DM-i智驾版","115KM尊贵型",156800],
-["唐DM-i智驾版","175KM尊贵型",166800],
-["唐DM-i智驾版","175KM尊荣型",176800],
-["唐DM-i智驾版","175KM激光雷达旗舰型",186800],
-["汉L DM","200KM激光雷达尊享型",191800],
-["汉L DM","200KM激光雷达旗舰型",211800],
-["汉L DM","四驱激光雷达旗舰型",241800],
-["汉L EV","701KM激光雷达尊享型",202800],
-["汉L EV","701KM激光雷达旗舰型",222800],
-["汉L EV","四驱激光雷达旗舰型",262800],
-["唐L DM","215KM激光雷达旗舰型",211800],
-["唐L DM","200KM四驱激光雷达旗舰型",231800],
-["唐L DM","无人机玩家版",267800],
-["唐L EV","670KM激光雷达尊享型",222800],
-["唐L EV","670KM激光雷达旗舰型",242800],
-["唐L EV","四驱激光雷达旗舰型",272800]
-  ];
-  for(var i=0;i<raw.length;i++){
-    GX_MAP[raw[i][0]+'|'+raw[i][1]] = raw[i][2];
-  }
+for(var i=0;i<GX_DATA.length;i++){
+  GX_MAP[GX_DATA[i][0]+'|'+GX_DATA[i][1]] = {gxPrice: GX_DATA[i][3], gxYh: GX_DATA[i][4]};
 }
 
-// 查找广宣价
-function getGxPrice(series, model){
-  // 精确匹配
+function getGx(series, model){
   var k = series+'|'+model;
-  if(GX_MAP[k] !== undefined) return GX_MAP[k];
-  // 模糊匹配：只用车系名的一部分
-  for(var key in GX_MAP){
-    if(key.indexOf('|') > 0){
-      var parts = key.split('|');
-      if((series.indexOf(parts[0]) >= 0 || parts[0].indexOf(series) >= 0) && model === parts[1]){
-        return GX_MAP[key];
-      }
-    }
-  }
-  return null;
+  return GX_MAP[k] || null;
 }
 
 // ============================================================
-//  工具函数
+//  工具
 // ============================================================
-function fmtPrice(v){
-  if(v===null||v===undefined||v===''||v===false)return '-';
+function fmt(v){
+  if(v===null||v===undefined||v===''||v===false) return null;
   var n=parseInt(v);
-  if(isNaN(n))return v;
+  if(isNaN(n)) return null;
   return '¥'+n.toLocaleString('zh-CN');
 }
-
-function esc(s){
-  var d=document.createElement('div');
-  d.textContent=s||'';
-  return d.innerHTML;
+function fmtd(v){
+  if(v===null||v===undefined||v==='') return null;
+  var n=parseInt(v);
+  if(isNaN(n)) return null;
+  return n;
 }
+function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
 
-function enrichData(raw){
+// ============================================================
+//  数据增强
+// ============================================================
+function enrich(raw){
   return raw.map(function(item){
     var o=Object.assign({},item);
-    o._guide=fmtPrice(item['指导价']);
-    
-    // 核心逻辑：如果是王朝品牌，用广宣价覆盖销售价
-    var brand = item['品牌'] || '';
-    var series = item['车系'] || '';
-    var model = item['车型名称'] || item['车型'] || '';
-    var gxPrice = null;
-    
-    if(brand === '王朝'){
-      gxPrice = getGxPrice(series, model);
-      if(gxPrice !== null && gxPrice !== undefined){
-        o._sell = fmtPrice(gxPrice);
-        o._yxPrice = gxPrice;  // 原始数字
-        o._isYxPrice = true;   // 标记为广宣价
+    var brand=item['品牌']||'';
+    var series=(item['车系']||'');
+    var model=(item['车型名称']||item['车型']||'');
+    o._guide=fmt(item['指导价']);
+
+    if(brand==='王朝'){
+      var gx=getGx(series,model);
+      if(gx){
+        o._sell=fmt(gx.gxPrice);
+        o._yxSell=gx.gxPrice;
+        o._yxPrice=true;
+        o._yxYh=gx.gxYh;  // 广宣优惠(含超换)
       } else {
-        o._sell = fmtPrice(item['销售价']);
-        o._isYxPrice = false;
+        o._sell=fmt(item['销售价']);
+        o._yxPrice=false;
       }
     } else {
-      o._sell = fmtPrice(item['销售价']);
-      o._isYxPrice = false;
+      o._sell=fmt(item['销售价']);
+      o._yxPrice=false;
     }
-
-    var d=item['备案优惠(不含超级置换)'];
-    o._discount=(d&&d!=='-'&&d!=='')?fmtPrice(d):'';
-    o._showDiscount=!!(o._discount&&o._discount!=='-');
-    var s=item['超级置换'];
-    o._super=(s&&s!=='-'&&s!=='')?fmtPrice(s):'';
-    o._showSuper=!!(o._super&&o._super!=='-');
-    var g=item['保养赠送'];
-    o._showGift=!!(g&&g!=='-'&&g!=='');
-    o._giftText=o._showGift?g:'';
     return o;
   });
-}
-
-// ============================================================
-//  品牌
-// ============================================================
-function getBrands(data){
-  var map={};
-  for(var i=0;i<data.length;i++){
-    var b=data[i]['品牌']||'其他';
-    if(!map[b])map[b]=[];
-    map[b].push(data[i]);
-  }
-  return map;
-}
-
-function renderBrandHome(data){
-  var brands=getBrands(data);
-  var total=data.length;
-  var html='<div class="brand-home">';
-  html+='<h2>🚗 宇翔专用·选择品牌</h2>';
-  html+='<p>共收录 '+total+' 条车型 <span style="color:#2E7D32">（王朝以广宣价为销售价）</span></p>';
-  html+='<div class="brand-grid">';
-  html+='<div class="brand-card all" onclick="selectBrand(\'全部\')"><div class="brand-icon">📋</div><div class="brand-name">全部品牌</div><div class="brand-count">'+total+' 条车型</div></div>';
-  var brandIcons={'王朝':'🏯','海洋':'🌊','腾势':'🚙','方程豹':'🐆'};
-  var brandKeys=['王朝','海洋','腾势','方程豹'];
-  for(var i=0;i<brandKeys.length;i++){
-    var b=brandKeys[i];
-    var count=(brands[b]||[]).length;
-    html+='<div class="brand-card '+b.toLowerCase()+'" onclick="selectBrand(\''+esc(b)+'\')"><div class="brand-icon">'+(brandIcons[b]||'🚗')+'</div><div class="brand-name">'+esc(b)+'</div><div class="brand-count">'+count+' 条车型'+(b==='王朝'?' ⭐':'')+'</div></div>';
-  }
-  html+='</div></div>';
-  document.getElementById('listWrap').innerHTML=html;
 }
 
 // ============================================================
@@ -327,56 +261,87 @@ function renderList(list){
     return;
   }
   w.innerHTML=list.map(function(item){
+    var brand=esc(item['品牌']||'');
+    var series=esc(item['车系全名']||item['车系']||'');
+    var model=esc(item['车型名称']||item['车型']||'');
     var h='<div class="card">';
-    h+='<div class="card-header">';
-    h+='<span class="car-series">'+esc(item['车系全名']||item['车系']||'')+'</span>';
-    h+='<span class="car-brand tag-'+esc(item['品牌']||'')+'">'+esc(item['品牌']||'')+'</span>';
+    h+='<div class="card-hd">';
+    h+='<span class="series">'+series+'</span>';
+    h+='<span class="brand-tag tag-'+brand+'">'+brand+'</span>';
     h+='</div>';
-    h+='<div class="card-model">'+esc(item['车型名称']||'')+'</div>';
-    h+='<div class="card-body">';
-    h+='<div class="price-row">';
-    h+='<div class="price-item"><span class="price-label">指导价</span><span class="price-val guide">'+item._guide+'</span></div>';
-    // 销售价 - 宇翔专用样式
-    var sellClass = item._isYxPrice ? 'yx-sell' : 'sell';
-    var sellBadge = item._isYxPrice ? '<span class="yx-badge">广宣价</span>' : '';
-    h+='<div class="price-item"><span class="price-label">销售价'+sellBadge+'</span><span class="price-val '+sellClass+'">'+item._sell+'</span></div>';
+    h+='<div class="model">'+model+'</div>';
+
+    // 价格行
+    h+='<div class="price-grid">';
+    h+='<div class="price-chip"><span class="price-label">指导价</span><span class="price-num guide">'+item._guide+'</span></div>';
+    if(item._yxPrice){
+      var badge='<span class="yx-badge">广宣价</span>';
+      h+='<div class="price-chip"><span class="price-label">销售价'+badge+'</span><span class="price-num yx-sell">'+item._sell+'</span></div>';
+    } else {
+      h+='<div class="price-chip"><span class="price-label">销售价</span><span class="price-num sell">'+item._sell+'</span></div>';
+    }
     h+='</div>';
-    if(item._showDiscount)h+='<div class="price-row"><div class="price-item"><span class="price-label">备案优惠</span><span class="price-val discount">'+item._discount+'</span></div></div>';
-    if(item._showSuper)h+='<div class="price-row"><div class="price-item"><span class="price-label">超级置换</span><span class="price-val extra">'+item._super+'</span></div></div>';
-    if(item._showGift)h+='<div class="gift-row"><span>🎁 赠送：</span><span class="gift-val">'+esc(item._giftText)+'</span></div>';
-    h+='</div>';
-    h+='<div class="card-footer">📋 '+(item['来源']||'')+(item._isYxPrice ? ' &nbsp;|&nbsp; 💰 宇翔广宣价' : '')+'</div>';
+
+    // 优惠展示
+    if(item._yxPrice){
+      // 王朝：从Excel展示广宣优惠三行
+      var pureYh = (item._yxYh !== null && item._yxYh !== undefined) ? item._yxYh : null;
+      // 广宣优惠（含超级置换补贴）= F列
+      h+='<div class="yh-row">';
+      if(pureYh !== null){
+        h+='<div class="yh-chip"><span class="yh-label">广宣优惠（含超换）</span><span class="yh-num">'+fmt(pureYh)+'</span></div>';
+      }
+      h+='</div>';
+      // 备注
+      var noteItems=[];
+      if(pureYh!==null && pureYh>0){
+        noteItems.push('<span class="note-tag note-tag含">含超级置换补贴</span>');
+      } else if(pureYh===0){
+        noteItems.push('<span class="note-tag note-tag含">含超级置换补贴（¥0）</span>');
+      }
+      if(noteItems.length>0){
+        h+='<div class="note-row">'+noteItems.join('')+'</div>';
+      }
+    } else {
+      // 其他品牌：展示原始备案优惠
+      var bjYh=item['备案优惠(不含超级置换)'];
+      var bjYhNum=fmtd(bjYh);
+      var superNum=item['超级置换']!==undefined&&item['超级置换']!==null&&item['超级置换']!=='-' ? fmtd(item['超级置换']) : null;
+      if(bjYhNum!==null || superNum!==null){
+        h+='<div class="yh-row">';
+        if(bjYhNum!==null){
+          h+='<div class="yh-chip"><span class="yh-label">备案优惠</span><span class="yh-num">'+fmt(bjYhNum)+'</span></div>';
+        }
+        if(superNum!==null){
+          h+='<div class="yh-chip"><span class="yh-label">超级置换</span><span class="yh-num" style="color:#4CAF50">'+fmt(superNum)+'</span></div>';
+        }
+        h+='</div>';
+        // 备注
+        var notes=[];
+        if(bjYhNum!==null) notes.push('<span class="note-tag note-tag不含">不含超级置换</span>');
+        if(superNum!==null) notes.push('<span class="note-tag note-tag含">另含超级置换¥'+superNum.toLocaleString()+'</span>');
+        if(notes.length>0) h+='<div class="note-row">'+notes.join('')+'</div>';
+      }
+    }
+
+    h+='<div class="card-ft">📋 '+(item['来源']||'')+(item._yxPrice?' &nbsp;|&nbsp; 💰 王朝广宣价':' &nbsp;|&nbsp; 云端实时数据')+'</div>';
     h+='</div>';
     return h;
   }).join('');
 }
 
 // ============================================================
-//  品牌筛选
+//  品牌切换
 // ============================================================
 function selectBrand(brand){
   currentBrand=brand;
   var tabs=document.querySelectorAll('.brand-tab');
-  for(var i=0;i<tabs.length;i++){
-    tabs[i].classList.toggle('active', tabs[i].getAttribute('data-brand')===brand);
-  }
+  for(var i=0;i<tabs.length;i++) tabs[i].classList.toggle('active',tabs[i].getAttribute('data-brand')===brand);
   document.getElementById('searchInput').value='';
   document.getElementById('clearBtn').style.display='none';
-
-  if(brand==='全部'){
-    var order={'王朝':0,'海洋':1,'腾势':2,'方程豹':3};
-    var sorted=allData.slice().sort(function(a,b){
-      var oa=order[a['品牌']]!==undefined?order[a['品牌']]:99;
-      var ob=order[b['品牌']]!==undefined?order[b['品牌']]:99;
-      return oa-ob;
-    });
-    updateStat(sorted.length);
-    renderList(sorted);
-  }else{
-    var filtered=allData.filter(function(d){return (d['品牌']||'')===brand});
-    updateStat(filtered.length, brand);
-    renderList(filtered);
-  }
+  var base=currentBrand==='全部'?allData:allData.filter(function(d){return (d['品牌']||'')===currentBrand});
+  updateStat(base.length, currentBrand);
+  renderList(base);
 }
 
 // ============================================================
@@ -385,23 +350,17 @@ function selectBrand(brand){
 function doSearch(){
   var kw=document.getElementById('searchInput').value.trim();
   document.getElementById('clearBtn').style.display=kw?'flex':'none';
-  var baseData=currentBrand==='全部'?allData:allData.filter(function(d){return (d['品牌']||'')===currentBrand});
-  if(!kw){
-    updateStat(baseData.length, currentBrand);
-    renderList(baseData);
-    return;
-  }
-  var kws=kw.toLowerCase().split(/\s+/).filter(function(k){return k});
-  var r=baseData.filter(function(item){
-    var t=[item['车系全名']||'',item['车型名称']||'',item['品牌']||'',item['来源']||'',item['车系']||''].join(' ').toLowerCase();
-    return kws.every(function(k){return t.indexOf(k)>=0});
+  var base=currentBrand==='全部'?allData:allData.filter(function(d){return (d['品牌']||'')===currentBrand});
+  if(!kw){updateStat(base.length,currentBrand);renderList(base);return;}
+  var kws=kw.toLowerCase().split(/\s+/).filter(function(k){return k;});
+  var r=base.filter(function(d){
+    var t=[d['车系全名']||'',d['车型名称']||'',d['品牌']||'',d['来源']||'',d['车系']||''].join(' ').toLowerCase();
+    return kws.every(function(k){return t.indexOf(k)>=0;});
   });
-  updateStat(r.length, currentBrand, kw);
+  updateStat(r.length,currentBrand,kw);
   renderList(r);
 }
-
-function onInput(){doSearch()}
-
+function onInput(){doSearch();}
 function clearSearch(){
   document.getElementById('searchInput').value='';
   document.getElementById('clearBtn').style.display='none';
@@ -411,57 +370,44 @@ function clearSearch(){
 // ============================================================
 //  状态栏
 // ============================================================
-function updateStat(count, brand, keyword){
+function updateStat(count,brand,keyword){
   var txt='';
-  if(keyword)txt='找到 '+count+' 条结果';
-  else if(brand&&brand!=='全部')txt=brand+' · '+count+' 条';
-  else txt='共收录 '+count+' 条车型数据';
-  if(lastUpdateTime)txt+=' &nbsp;|&nbsp; '+lastUpdateTime;
+  if(keyword) txt='找到 '+count+' 条';
+  else if(brand&&brand!=='全部') txt=brand+' · '+count+' 条';
+  else txt='共 '+count+' 条车型';
+  if(lastUpdateTime) txt+=' &nbsp;|&nbsp; 更新 '+lastUpdateTime;
   document.getElementById('statText').innerHTML=txt;
 }
 
 // ============================================================
-//  数据加载
+//  云端加载
 // ============================================================
 function loadCloudData(){
   var stat=document.getElementById('statText');
   var wrap=document.getElementById('listWrap');
-  stat.innerHTML='<span class="loading-dot"></span>正在从云端加载...';
-  wrap.innerHTML='<div class="loading-tip"><div class="spinner"></div><br>正在从云端加载数据...</div>';
-
-  fetch(DATA_URL, {cache:'no-cache', headers:{'Accept':'application/json'}})
-    .then(function(res){
-      if(!res.ok)throw new Error('HTTP '+res.status);
-      return res.json();
-    })
+  stat.innerHTML='<span class="loading-dot"></span>加载中...';
+  wrap.innerHTML='<div class="loading-tip"><div class="spinner"></div>正在从云端加载数据...</div>';
+  fetch(DATA_URL,{cache:'no-cache',headers:{'Accept':'application/json'}})
+    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
     .then(function(json){
-      if(!json||!Array.isArray(json)||json.length===0){
-        throw new Error('数据为空');
-      }
-      allData=enrichData(json);
-
-      // 统计广宣价覆盖数
-      var yxCount = allData.filter(function(d){return d._isYxPrice}).length;
-
+      if(!json||!Array.isArray(json)||json.length===0) throw new Error('数据为空');
+      allData=enrich(json);
       var now=new Date();
-      lastUpdateTime=(now.getMonth()+1)+'/'+now.getDate()+ ' '+now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-
+      lastUpdateTime=(now.getMonth()+1)+'/'+now.getDate()+' '+now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
       selectBrand(currentBrand);
     })
-    .catch(function(err){
-      console.error('[加载失败]', err);
+    .catch(function(e){
+      console.error('[加载失败]',e);
       stat.innerHTML='⚠️ 加载失败，点击刷新重试';
-      wrap.innerHTML='<div class="empty-tip">😅 数据加载失败<br><br><span style="font-size:13px;color:#999">'+esc(err.message)+'</span><br><br><button onclick="loadCloudData()" style="padding:8px 24px;background:#2E7D32;color:#fff;border:none;border-radius:20px;font-size:14px;cursor:pointer">重新加载</button></div>';
+      wrap.innerHTML='<div class="empty-tip">😅 数据加载失败<br><br><span style="font-size:13px;color:#999">'+esc(e.message)+'</span><br><br><button onclick="loadCloudData()" style="padding:8px 24px;background:#2E7D32;color:#fff;border:none;border-radius:20px;font-size:14px;cursor:pointer">重新加载</button></div>';
     });
 }
 
 // ============================================================
-//  初始化
+//  启动
 // ============================================================
-loadGxMap();  // 先加载广宣价映射
 loadCloudData();
-
-setInterval(loadCloudData, 30*60*1000);
+setInterval(loadCloudData,30*60*1000);
 </script>
 </body>
 </html>
