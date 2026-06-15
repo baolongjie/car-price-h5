@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -64,6 +64,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 .price-val.sell{color:#E53935}
 .price-val.discount{color:#FF9800}
 .price-val.extra{color:#4CAF50}
+.price-val.total{color:#E91E63}
 .gift-row{background:#FFF8E1;border-radius:6px;padding:6px 10px;margin-top:6px;font-size:12px;color:#F57F17;display:flex;gap:4px}
 .gift-val{color:#E65100}
 .card-footer{padding:8px 14px;background:#fafafa;font-size:11px;color:#999;border-top:1px solid #f0f0f0}
@@ -161,14 +162,20 @@ function enrichData(raw){
     o._guide=fmtPrice(item['指导价']);
     o._sell=fmtPrice(item['销售价']);
     var d=item['备案优惠(不含超级置换)'];
+    var dNum=(d&&d!=='-'&&d!=='')?parseInt(d):0;
     o._discount=(d&&d!=='-'&&d!=='')?fmtPrice(d):'';
     o._showDiscount=!!(o._discount&&o._discount!=='-');
     var s=item['超级置换'];
+    var sNum=(s&&s!=='-'&&s!=='')?parseInt(s):0;
     o._super=(s&&s!=='-'&&s!=='')?fmtPrice(s):'';
     o._showSuper=!!(o._super&&o._super!=='-');
     var g=item['保养赠送'];
     o._showGift=!!(g&&g!=='-'&&g!=='');
     o._giftText=o._showGift?g:'';
+    // 共计优惠 = 备案优惠 + 超级置换
+    var totalNum=dNum+(sNum||0);
+    o._totalDiscount=totalNum>0?('¥'+totalNum.toLocaleString('zh-CN')):'';
+    o._showTotal=totalNum>0;
     return o;
   });
 }
@@ -242,6 +249,7 @@ function renderList(list){
     h+='<div class="price-item"><span class="price-label">指导价</span><span class="price-val guide">'+item._guide+'</span></div>';
     h+='<div class="price-item"><span class="price-label">销售价</span><span class="price-val sell">'+item._sell+'</span></div>';
     h+='</div>';
+    if(item._showTotal)h+='<div class="price-row"><div class="price-item"><span class="price-label">共计优惠</span><span class="price-val total">'+item._totalDiscount+'</span></div></div>';
     if(item._showDiscount)h+='<div class="price-row"><div class="price-item"><span class="price-label">备案优惠</span><span class="price-val discount">'+item._discount+'</span></div></div>';
     if(item._showSuper)h+='<div class="price-row"><div class="price-item"><span class="price-label">超级置换</span><span class="price-val extra">'+item._super+'</span></div></div>';
     if(item._showGift)h+='<div class="gift-row"><span>🎁 赠送：</span><span class="gift-val">'+esc(item._giftText)+'</span></div>';
@@ -376,3 +384,4 @@ setInterval(loadCloudData, 30*60*1000);
 </script>
 </body>
 </html>
+
