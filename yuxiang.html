@@ -66,8 +66,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 </div>
 
 <div class="brand-tabs">
-  <button class="brand-tab active" data-brand="全部" onclick="selectBrand('全部')">全部</button>
-  <button class="brand-tab" data-brand="王朝" onclick="selectBrand('王朝')">🏯 王朝</button>
+  <button class="brand-tab active" data-brand="王朝" onclick="selectBrand('王朝')">🏯 王朝</button>
   <button class="brand-tab" data-brand="海洋" onclick="selectBrand('海洋')">🌊 海洋</button>
   <button class="brand-tab" data-brand="腾势" onclick="selectBrand('腾势')">🚙 腾势</button>
   <button class="brand-tab" data-brand="方程豹" onclick="selectBrand('方程豹')">🐆 方程豹</button>
@@ -87,7 +86,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 <script>
 var DATA_URL = 'https://gist.githubusercontent.com/baolongjie/62c26b6e487aebc34611599dc740edfd/raw/car_data_v37.json';
 var allData = [];
-var currentBrand = '全部';
+var currentBrand = '王朝';
 var lastUpdateTime = null;
 
 // [车系, 车型, 指导价, 广宣价, 广宣优惠]
@@ -235,7 +234,7 @@ function selectBrand(brand){
   for(var i=0;i<tabs.length;i++) tabs[i].classList.toggle('active',tabs[i].getAttribute('data-brand')===brand);
   document.getElementById('searchInput').value='';
   document.getElementById('clearBtn').style.display='none';
-  var base=currentBrand==='全部'?allData:allData.filter(function(d){return(d['品牌']||'')===currentBrand});
+  var base=allData.filter(function(d){return(d['品牌']||'')===currentBrand});
   updateStat(base.length,currentBrand);
   renderList(base);
 }
@@ -243,7 +242,7 @@ function selectBrand(brand){
 function doSearch(){
   var kw=document.getElementById('searchInput').value.trim();
   document.getElementById('clearBtn').style.display=kw?'flex':'none';
-  var base=currentBrand==='全部'?allData:allData.filter(function(d){return(d['品牌']||'')===currentBrand});
+  var base=allData.filter(function(d){return(d['品牌']||'')===currentBrand});
   if(!kw){updateStat(base.length,currentBrand);renderList(base);return;}
   var kws=kw.toLowerCase().split(/\s+/).filter(function(k){return k;});
   var r=base.filter(function(d){
@@ -263,8 +262,7 @@ function clearSearch(){
 function updateStat(count,brand,keyword){
   var txt='';
   if(keyword) txt='找到 '+count+' 条';
-  else if(brand&&brand!=='全部') txt=brand+' · '+count+' 条';
-  else txt='共 '+count+' 条';
+  else txt=brand+' · '+count+' 条';
   if(lastUpdateTime) txt+=' &nbsp;|&nbsp; '+lastUpdateTime;
   document.getElementById('statText').innerHTML=txt;
 }
