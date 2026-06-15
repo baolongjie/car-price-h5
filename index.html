@@ -155,14 +155,20 @@ function enrichData(raw){
     o._guide=fmtPrice(item['指导价']);
     o._sell=fmtPrice(item['销售价']);
     var d=item['备案优惠(不含超级置换)'];
+    var dNum=(d&&d!=='-'&&d!=='')?parseInt(d):0;
     o._discount=(d&&d!=='-'&&d!=='')?fmtPrice(d):'';
     o._showDiscount=!!(o._discount&&o._discount!=='-');
     var s=item['超级置换'];
+    var sNum=(s&&s!=='-'&&s!=='')?parseInt(s):0;
     o._super=(s&&s!=='-'&&s!=='')?fmtPrice(s):'';
     o._showSuper=!!(o._super&&o._super!=='-');
     var g=item['保养赠送'];
     o._showGift=!!(g&&g!=='-'&&g!=='');
     o._giftText=o._showGift?g:'';
+    // 共计优惠 = 备案优惠 + 超级置换
+    var totalNum=dNum+sNum;
+    o._totalDiscount=totalNum>0?('¥'+totalNum.toLocaleString('zh-CN')):'';
+    o._showTotal=totalNum>0;
     return o;
   });
 }
@@ -236,7 +242,13 @@ function renderList(list){
     h+='<div class="price-item"><span class="price-label">指导价</span><span class="price-val guide">'+item._guide+'</span></div>';
     h+='<div class="price-item"><span class="price-label">销售价</span><span class="price-val sell">'+item._sell+'</span></div>';
     h+='</div>';
-    if(item._showDiscount)h+='<div class="price-row"><div class="price-item"><span class="price-label">备案优惠</span><span class="price-val discount">'+item._discount+'</span></div></div>';
+    // 备案优惠 + 共计优惠 并排显示
+    if(item._showDiscount||item._showTotal){
+      h+='<div class="price-row">';
+      if(item._showDiscount)h+='<div class="price-item"><span class="price-label">备案优惠</span><span class="price-val discount">'+item._discount+'</span></div>';
+      if(item._showTotal)h+='<div class="price-item"><span class="price-label">共计优惠</span><span class="price-val extra">'+item._totalDiscount+'</span></div>';
+      h+='</div>';
+    }
     if(item._showSuper)h+='<div class="price-row"><div class="price-item"><span class="price-label">超级置换</span><span class="price-val extra">'+item._super+'</span></div></div>';
     if(item._showGift)h+='<div class="gift-row"><span>🎁 赠送：</span><span class="gift-val">'+esc(item._giftText)+'</span></div>';
     h+='</div>';
