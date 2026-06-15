@@ -56,7 +56,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 .price-item{flex:1}
 .price-label{font-size:11px;color:#999;display:block;margin-bottom:2px}
 .price-val{font-size:15px;font-weight:700}
-.price-val.guide{color:#999;text-decoration:line-through}
+.price-val.guide{color:#333}
 .price-val.sell{color:#E53935}
 .price-val.discount{color:#FF9800}
 .price-val.extra{color:#4CAF50}
@@ -264,8 +264,15 @@ function selectBrand(brand){
   document.getElementById('clearBtn').style.display='none';
 
   if(brand==='全部'){
-    updateStat(allData.length);
-    renderList(allData);
+    // 按品牌优先级排序：王朝 > 海洋 > 腾势 > 方程豹
+    var order={'王朝':0,'海洋':1,'腾势':2,'方程豹':3};
+    var sorted=allData.slice().sort(function(a,b){
+      var oa=order[a['品牌']]!==undefined?order[a['品牌']]:99;
+      var ob=order[b['品牌']]!==undefined?order[b['品牌']]:99;
+      return oa-ob;
+    });
+    updateStat(sorted.length);
+    renderList(sorted);
   }else{
     var filtered=allData.filter(function(d){return (d['品牌']||'')===brand});
     updateStat(filtered.length, brand);
