@@ -1,13 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>🚗 车辆价格查询</title>
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta pragma="no-cache">
-<meta expires="0">
-<script>if(location.search.indexOf('v=')===-1)location.href=location.pathname+'?v=2'+location.hash</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;background:#f5f6fa;min-height:100vh}
@@ -60,11 +56,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 .price-item{flex:1}
 .price-label{font-size:11px;color:#999;display:block;margin-bottom:2px}
 .price-val{font-size:15px;font-weight:700}
-.price-val.guide{color:#333}
+.price-val.guide{color:#999;text-decoration:line-through}
 .price-val.sell{color:#E53935}
 .price-val.discount{color:#FF9800}
 .price-val.extra{color:#4CAF50}
-.price-val.total{color:#E91E63}
 .gift-row{background:#FFF8E1;border-radius:6px;padding:6px 10px;margin-top:6px;font-size:12px;color:#F57F17;display:flex;gap:4px}
 .gift-val{color:#E65100}
 .card-footer{padding:8px 14px;background:#fafafa;font-size:11px;color:#999;border-top:1px solid #f0f0f0}
@@ -121,7 +116,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 <!-- 状态栏 -->
 <div class="stat-bar" id="statBar">
   <span id="statText">正在加载...</span>
-  <button class="refresh-btn" onclick="location.href='edit.html'">✏️ 编辑</button>
   <button class="refresh-btn" onclick="loadCloudData()">🔄 刷新</button>
 </div>
 
@@ -157,31 +151,21 @@ function esc(s){
 }
 
 function enrichData(raw){
-  var result=[];
-  for(var i=0;i<raw.length;i++){
-    var item=raw[i];
-    var o={};
-    for(var k in item) o[k]=item[k];
+  return raw.map(function(item){
+    var o=Object.assign({},item);
     o._guide=fmtPrice(item['指导价']);
     o._sell=fmtPrice(item['销售价']);
     var d=item['备案优惠(不含超级置换)'];
-    var dNum=(d&&d!=='-'&&d!=='')?parseInt(d):0;
     o._discount=(d&&d!=='-'&&d!=='')?fmtPrice(d):'';
     o._showDiscount=!!(o._discount&&o._discount!=='-');
     var s=item['超级置换'];
-    var sNum=(s&&s!=='-'&&s!=='')?parseInt(s):0;
     o._super=(s&&s!=='-'&&s!=='')?fmtPrice(s):'';
     o._showSuper=!!(o._super&&o._super!=='-');
     var g=item['保养赠送'];
     o._showGift=!!(g&&g!=='-'&&g!=='');
     o._giftText=o._showGift?g:'';
-    // 共计优惠 = 备案优惠 + 超级置换
-    var totalNum=dNum+(sNum||0);
-    o._totalDiscount=totalNum>0?('¥'+totalNum.toLocaleString('zh-CN')):'';
-    o._showTotal=totalNum>0;
-    result.push(o);
-  }
-  return result;
+    return o;
+  });
 }
 
 // ============================================================
@@ -241,9 +225,7 @@ function renderList(list){
     w.innerHTML='<div class="empty-tip">😅 未找到匹配车型</div>';
     return;
   }
-  var html='';
-  for(var i=0;i<list.length;i++){
-    var item=list[i];
+  w.innerHTML=list.map(function(item){
     var h='<div class="card">';
     h+='<div class="card-header">';
     h+='<span class="car-series">'+esc(item['车系全名']||item['车系']||'')+'</span>';
@@ -251,40 +233,18 @@ function renderList(list){
     h+='</div>';
     h+='<div class="card-model">'+esc(item['车型名称']||'')+'</div>';
     h+='<div class="card-body">';
-    // 第1排：指导价 + 销售价
     h+='<div class="price-row">';
     h+='<div class="price-item"><span class="price-label">指导价</span><span class="price-val guide">'+item._guide+'</span></div>';
     h+='<div class="price-item"><span class="price-label">销售价</span><span class="price-val sell">'+item._sell+'</span></div>';
     h+='</div>';
-    // 第2排：共计优惠（独占一排，醒目）
-    if(item._showTotal){
-      h+='<div class="price-row">';
-      h+='<div class="price-item"><span class="price-label">共计优惠</span><span class="price-val total">'+item._totalDiscount+'</span></div>';
-      h+='</div>';
-    }
-    // 第3排：备案优惠 + 超级置换（并排）
-    var hasDiscount=item._showDiscount, hasSuper=item._showSuper;
-    if(hasDiscount||hasSuper){
-      h+='<div class="price-row">';
-      if(hasDiscount){
-        h+='<div class="price-item"><span class="price-label">备案优惠</span><span class="price-val discount">'+item._discount+'</span></div>';
-      }else{
-        h+='<div class="price-item"></div>';
-      }
-      if(hasSuper){
-        h+='<div class="price-item"><span class="price-label">超级置换</span><span class="price-val extra">'+item._super+'</span></div>';
-      }else{
-        h+='<div class="price-item"></div>';
-      }
-      h+='</div>';
-    }
+    if(item._showDiscount)h+='<div class="price-row"><div class="price-item"><span class="price-label">备案优惠</span><span class="price-val discount">'+item._discount+'</span></div></div>';
+    if(item._showSuper)h+='<div class="price-row"><div class="price-item"><span class="price-label">超级置换</span><span class="price-val extra">'+item._super+'</span></div></div>';
     if(item._showGift)h+='<div class="gift-row"><span>🎁 赠送：</span><span class="gift-val">'+esc(item._giftText)+'</span></div>';
     h+='</div>';
     h+='<div class="card-footer">📋 '+(item['来源']||'')+'</div>';
     h+='</div>';
-    html+=h;
-  }
-  w.innerHTML=html;
+    return h;
+  }).join('');
 }
 
 // ============================================================
@@ -304,15 +264,8 @@ function selectBrand(brand){
   document.getElementById('clearBtn').style.display='none';
 
   if(brand==='全部'){
-    // 按品牌优先级排序：王朝 > 海洋 > 腾势 > 方程豹
-    var order={'王朝':0,'海洋':1,'腾势':2,'方程豹':3};
-    var sorted=allData.slice().sort(function(a,b){
-      var oa=order[a['品牌']]!==undefined?order[a['品牌']]:99;
-      var ob=order[b['品牌']]!==undefined?order[b['品牌']]:99;
-      return oa-ob;
-    });
-    updateStat(sorted.length);
-    renderList(sorted);
+    updateStat(allData.length);
+    renderList(allData);
   }else{
     var filtered=allData.filter(function(d){return (d['品牌']||'')===brand});
     updateStat(filtered.length, brand);
@@ -411,4 +364,3 @@ setInterval(loadCloudData, 30*60*1000);
 </script>
 </body>
 </html>
-
