@@ -237,7 +237,9 @@ function renderList(list){
     w.innerHTML='<div class="empty-tip">😅 未找到匹配车型</div>';
     return;
   }
-  w.innerHTML=list.map(function(item){
+  var html='';
+  for(var i=0;i<list.length;i++){
+    var item=list[i];
     var h='<div class="card">';
     h+='<div class="card-header">';
     h+='<span class="car-series">'+esc(item['车系全名']||item['车系']||'')+'</span>';
@@ -276,8 +278,9 @@ function renderList(list){
     h+='</div>';
     h+='<div class="card-footer">📋 '+(item['来源']||'')+'</div>';
     h+='</div>';
-    return h;
-  }).join('');
+    html+=h;
+  }
+  w.innerHTML=html;
 }
 
 // ============================================================
