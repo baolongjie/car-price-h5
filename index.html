@@ -245,13 +245,33 @@ function renderList(list){
     h+='</div>';
     h+='<div class="card-model">'+esc(item['车型名称']||'')+'</div>';
     h+='<div class="card-body">';
+    // 第1排：指导价 + 销售价
     h+='<div class="price-row">';
     h+='<div class="price-item"><span class="price-label">指导价</span><span class="price-val guide">'+item._guide+'</span></div>';
     h+='<div class="price-item"><span class="price-label">销售价</span><span class="price-val sell">'+item._sell+'</span></div>';
     h+='</div>';
-    if(item._showTotal)h+='<div class="price-row"><div class="price-item"><span class="price-label">共计优惠</span><span class="price-val total">'+item._totalDiscount+'</span></div></div>';
-    if(item._showDiscount)h+='<div class="price-row"><div class="price-item"><span class="price-label">备案优惠</span><span class="price-val discount">'+item._discount+'</span></div></div>';
-    if(item._showSuper)h+='<div class="price-row"><div class="price-item"><span class="price-label">超级置换</span><span class="price-val extra">'+item._super+'</span></div></div>';
+    // 第2排：共计优惠（独占一排，醒目）
+    if(item._showTotal){
+      h+='<div class="price-row">';
+      h+='<div class="price-item"><span class="price-label">共计优惠</span><span class="price-val total">'+item._totalDiscount+'</span></div>';
+      h+='</div>';
+    }
+    // 第3排：备案优惠 + 超级置换（并排）
+    var hasDiscount=item._showDiscount, hasSuper=item._showSuper;
+    if(hasDiscount||hasSuper){
+      h+='<div class="price-row">';
+      if(hasDiscount){
+        h+='<div class="price-item"><span class="price-label">备案优惠</span><span class="price-val discount">'+item._discount+'</span></div>';
+      }else{
+        h+='<div class="price-item"></div>';
+      }
+      if(hasSuper){
+        h+='<div class="price-item"><span class="price-label">超级置换</span><span class="price-val extra">'+item._super+'</span></div>';
+      }else{
+        h+='<div class="price-item"></div>';
+      }
+      h+='</div>';
+    }
     if(item._showGift)h+='<div class="gift-row"><span>🎁 赠送：</span><span class="gift-val">'+esc(item._giftText)+'</span></div>';
     h+='</div>';
     h+='<div class="card-footer">📋 '+(item['来源']||'')+'</div>';
