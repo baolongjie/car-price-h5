@@ -7,16 +7,16 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;background:#f5f6fa;min-height:100vh}
-.header{background:linear-gradient(135deg,#2E7D32,#1B5E20);padding:14px 16px 12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.header h1{color:#fff;font-size:18px;font-weight:600;text-align:center;margin-bottom:6px;letter-spacing:1px}
-.header .sub{color:rgba(255,255,255,.75);font-size:11px;text-align:center;line-height:1.5}
+.header{background:linear-gradient(135deg,#2E7D32,#1B5E20);padding:14px 16px 10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.header h1{color:#fff;font-size:18px;font-weight:600;text-align:center;letter-spacing:1px}
+.header .sub{color:rgba(255,255,255,.75);font-size:11px;text-align:center;margin-top:4px}
 .search-bar{display:flex;gap:8px;align-items:center;margin-top:10px}
 .search-box{flex:1;background:#fff;border-radius:20px;display:flex;align-items:center;padding:0 14px;height:38px}
 .search-box input{flex:1;border:none;outline:none;font-size:15px;color:#333;background:transparent}
 .search-box input::placeholder{color:#aaa}
 .clear-btn{width:20px;height:20px;background:#ccc;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:12px;color:#fff;cursor:pointer;flex-shrink:0}
-.search-btn{background:#FF9800;color:#fff;border:none;border-radius:20px;padding:0 16px;height:38px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap}
-.brand-tabs{display:flex;gap:6px;padding:8px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:#fff;border-bottom:1px solid #eee;position:sticky;top:68px;z-index:99}
+.search-btn{background:#FF9800;color:#fff;border:none;border-radius:20px;padding:0 16px;height:38px;font-size:15px;font-weight:600;cursor:pointer}
+.brand-tabs{display:flex;gap:6px;padding:8px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:#fff;border-bottom:1px solid #eee;position:sticky;top:56px;z-index:99}
 .brand-tabs::-webkit-scrollbar{display:none}
 .brand-tab{flex-shrink:0;padding:6px 14px;border-radius:16px;font-size:13px;font-weight:600;color:#555;background:#f0f0f0;border:none;cursor:pointer;transition:all .2s;white-space:nowrap}
 .brand-tab.active{box-shadow:0 2px 6px rgba(0,0,0,.15)}
@@ -25,40 +25,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 .brand-tab[data-brand="海洋"].active{background:#0277BD;color:#fff}
 .brand-tab[data-brand="腾势"].active{background:#1565C0;color:#fff}
 .brand-tab[data-brand="方程豹"].active{background:#4CAF50;color:#fff}
-.brand-tab:hover:not(.active){background:#e0e0e0}
 .stat-bar{padding:10px 16px;font-size:13px;color:#666;background:#fff;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
-.stat-bar .loading-dot{display:inline-block;width:6px;height:6px;background:#2E7D32;border-radius:50%;animation:blink 1s infinite;margin-right:4px;vertical-align:middle}
+.loading-dot{display:inline-block;width:6px;height:6px;background:#2E7D32;border-radius:50%;animation:blink 1s infinite;margin-right:4px;vertical-align:middle}
 @keyframes blink{50%{opacity:.3}}
 .refresh-btn{background:none;border:1px solid #ddd;color:#666;padding:2px 10px;border-radius:10px;font-size:11px;cursor:pointer}
 .list-wrap{padding:10px 12px 20px}
 .card{background:#fff;border-radius:12px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.card-hd{display:flex;justify-content:space-between;align-items:center;padding:12px 14px 8px;border-bottom:1px solid #f0f0f0}
+.card-hd{display:flex;justify-content:space-between;align-items:center;padding:11px 14px 7px;border-bottom:1px solid #f0f0f0}
 .series{font-size:15px;font-weight:700;color:#2E7D32;flex:1}
 .brand-tag{font-size:11px;padding:2px 8px;border-radius:10px;color:#fff;font-weight:600;flex-shrink:0;margin-left:8px}
 .tag-王朝{background:#E65100}.tag-海洋{background:#0277BD}.tag-腾势{background:#1565C0}.tag-方程豹{background:#4CAF50}
-.model{padding:6px 14px 4px;font-size:14px;color:#444;font-weight:500}
-.price-grid{padding:8px 14px 4px;display:flex;gap:8px;flex-wrap:wrap}
-.price-chip{flex:1;min-width:90px;background:#f8f9fa;border-radius:8px;padding:6px 10px}
-.price-label{font-size:10px;color:#999;display:block;margin-bottom:2px}
-.price-num{font-size:14px;font-weight:700}
-.price-num.guide{color:#555}
-.price-num.sell{color:#E53935}
-.price-num.yx-sell{color:#2E7D32;font-size:16px}
-/* 广宣价角标 */
-.yx-badge{display:inline-block;font-size:9px;padding:1px 5px;border-radius:6px;background:#E8F5E9;color:#2E7D32;font-weight:700;margin-left:3px;vertical-align:middle}
-/* 备注行 */
-.note-row{padding:6px 14px 10px;font-size:11px;color:#999}
-.note-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:6px;font-weight:600;margin-right:4px}
-.note-tag含{background:#fff3e0;color:#E65100}
-.note-tag不含{background:#e3f2fd;color:#0277BD}
-.note-tag备{background:#f3e5f5;color:#7B1FA2}
-/* 卡片底部 */
-.card-ft{padding:8px 14px;background:#fafafa;font-size:11px;color:#999;border-top:1px solid #f0f0f0}
-/* 其他品牌优惠 */
-.yh-row{display:flex;gap:8px;padding:4px 14px 8px;flex-wrap:wrap}
-.yh-chip{flex:1;min-width:90px;background:#f8f9fa;border-radius:8px;padding:6px 10px}
-.yh-label{font-size:10px;color:#999;display:block;margin-bottom:2px}
-.yh-num{font-size:14px;font-weight:700;color:#FF9800}
+.model{padding:5px 14px 7px;font-size:13px;color:#888;font-weight:500}
+.price-row{display:flex;gap:8px;padding:6px 14px 12px;background:#fafafa}
+.price-item{flex:1;text-align:center}
+.price-label{font-size:11px;color:#999;display:block;margin-bottom:3px}
+.price-num{font-size:17px;font-weight:800;display:block}
+.price-num.guide{color:#333}
+.price-num.gx{color:#E53935}
+.price-num.gx.yx{color:#2E7D32}
+.yx-badge{display:inline-block;font-size:9px;padding:1px 5px;border-radius:6px;background:#E8F5E9;color:#2E7D32;font-weight:700;margin-left:2px;vertical-align:middle}
 .empty-tip{text-align:center;padding:60px 0;color:#bbb;font-size:16px}
 .loading-tip{text-align:center;padding:60px 0;color:#999;font-size:15px}
 .spinner{display:block;width:30px;height:30px;border:3px solid #eee;border-top-color:#2E7D32;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
@@ -70,7 +55,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 
 <div class="header">
   <h1>🚗 宇翔专用·车价查询</h1>
-  <div class="sub">王朝销售价以广宣价为准 · 广宣优惠含/不含超级置换补贴已标注<br>数据来源：佛山大区活动备案表</div>
+  <div class="sub">王朝以广宣价为销售价 · 仅展示指导价与广宣价</div>
   <div class="search-bar">
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="搜索车系/车型..." oninput="onInput()">
@@ -80,7 +65,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
   </div>
 </div>
 
-<div class="brand-tabs" id="brandTabs">
+<div class="brand-tabs">
   <button class="brand-tab active" data-brand="全部" onclick="selectBrand('全部')">全部</button>
   <button class="brand-tab" data-brand="王朝" onclick="selectBrand('王朝')">🏯 王朝</button>
   <button class="brand-tab" data-brand="海洋" onclick="selectBrand('海洋')">🌊 海洋</button>
@@ -97,20 +82,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
   <div class="loading-tip"><div class="spinner"></div>正在从云端加载数据...</div>
 </div>
 
-<div class="footer">宇翔专用版 · 王朝广宣价 &nbsp;|&nbsp; 云端实时同步</div>
+<div class="footer">宇翔专用版 · 仅展示指导价 &amp; 广宣价</div>
 
 <script>
-// ============================================================
-//  配置
-// ============================================================
 var DATA_URL = 'https://gist.githubusercontent.com/baolongjie/62c26b6e487aebc34611599dc740edfd/raw/car_data_v37.json';
 var allData = [];
 var currentBrand = '全部';
 var lastUpdateTime = null;
 
-// ============================================================
-//  Excel广宣价数据 [车系, 车型, 指导价, 广宣价, 广宣优惠(含超换)]
-// ============================================================
+// [车系, 车型, 指导价, 广宣价, 广宣优惠]
 var GX_DATA = [
 ["2026款秦PLUS DM-i","128KM进取型",79800,74800,5000],
 ["2026款秦PLUS DM-i","210KM进取型",89800,84800,5000],
@@ -193,67 +173,37 @@ var GX_DATA = [
 ["唐L EV","四驱激光雷达旗舰型",289800,272800,17000]
 ];
 
-// 快速查询表：车系+车型 => {gxPrice, gxYh}
 var GX_MAP = {};
 for(var i=0;i<GX_DATA.length;i++){
-  GX_MAP[GX_DATA[i][0]+'|'+GX_DATA[i][1]] = {gxPrice: GX_DATA[i][3], gxYh: GX_DATA[i][4]};
+  GX_MAP[GX_DATA[i][0]+'|'+GX_DATA[i][1]]={gxPrice:GX_DATA[i][3]};
 }
-
-function getGx(series, model){
-  var k = series+'|'+model;
-  return GX_MAP[k] || null;
+function getGx(series,model){
+  return GX_MAP[series+'|'+model]||null;
 }
-
-// ============================================================
-//  工具
-// ============================================================
 function fmt(v){
-  if(v===null||v===undefined||v===''||v===false) return null;
+  if(v===null||v===undefined||v==='') return null;
   var n=parseInt(v);
   if(isNaN(n)) return null;
   return '¥'+n.toLocaleString('zh-CN');
 }
-function fmtd(v){
-  if(v===null||v===undefined||v==='') return null;
-  var n=parseInt(v);
-  if(isNaN(n)) return null;
-  return n;
-}
 function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
 
-// ============================================================
-//  数据增强
-// ============================================================
 function enrich(raw){
   return raw.map(function(item){
     var o=Object.assign({},item);
     var brand=item['品牌']||'';
     var series=(item['车系']||'');
     var model=(item['车型名称']||item['车型']||'');
-    o._guide=fmt(item['指导价']);
-
+    o._guide=item['指导价'];
+    o._gx=fmt(item._guide);
     if(brand==='王朝'){
       var gx=getGx(series,model);
-      if(gx){
-        o._sell=fmt(gx.gxPrice);
-        o._yxSell=gx.gxPrice;
-        o._yxPrice=true;
-        o._yxYh=gx.gxYh;  // 广宣优惠(含超换)
-      } else {
-        o._sell=fmt(item['销售价']);
-        o._yxPrice=false;
-      }
-    } else {
-      o._sell=fmt(item['销售价']);
-      o._yxPrice=false;
+      if(gx){o._gx=fmt(gx.gxPrice);o._yx=true;}
     }
     return o;
   });
 }
 
-// ============================================================
-//  列表渲染
-// ============================================================
 function renderList(list){
   var w=document.getElementById('listWrap');
   if(!list||list.length===0){
@@ -264,93 +214,34 @@ function renderList(list){
     var brand=esc(item['品牌']||'');
     var series=esc(item['车系全名']||item['车系']||'');
     var model=esc(item['车型名称']||item['车型']||'');
-    var h='<div class="card">';
-    h+='<div class="card-hd">';
-    h+='<span class="series">'+series+'</span>';
-    h+='<span class="brand-tag tag-'+brand+'">'+brand+'</span>';
-    h+='</div>';
-    h+='<div class="model">'+model+'</div>';
-
-    // 价格行
-    h+='<div class="price-grid">';
-    h+='<div class="price-chip"><span class="price-label">指导价</span><span class="price-num guide">'+item._guide+'</span></div>';
-    if(item._yxPrice){
-      var badge='<span class="yx-badge">广宣价</span>';
-      h+='<div class="price-chip"><span class="price-label">销售价'+badge+'</span><span class="price-num yx-sell">'+item._sell+'</span></div>';
-    } else {
-      h+='<div class="price-chip"><span class="price-label">销售价</span><span class="price-num sell">'+item._sell+'</span></div>';
-    }
-    h+='</div>';
-
-    // 优惠展示
-    if(item._yxPrice){
-      // 王朝：从Excel展示广宣优惠三行
-      var pureYh = (item._yxYh !== null && item._yxYh !== undefined) ? item._yxYh : null;
-      // 广宣优惠（含超级置换补贴）= F列
-      h+='<div class="yh-row">';
-      if(pureYh !== null){
-        h+='<div class="yh-chip"><span class="yh-label">广宣优惠（含超换）</span><span class="yh-num">'+fmt(pureYh)+'</span></div>';
-      }
-      h+='</div>';
-      // 备注
-      var noteItems=[];
-      if(pureYh!==null && pureYh>0){
-        noteItems.push('<span class="note-tag note-tag含">含超级置换补贴</span>');
-      } else if(pureYh===0){
-        noteItems.push('<span class="note-tag note-tag含">含超级置换补贴（¥0）</span>');
-      }
-      if(noteItems.length>0){
-        h+='<div class="note-row">'+noteItems.join('')+'</div>';
-      }
-    } else {
-      // 其他品牌：展示原始备案优惠
-      var bjYh=item['备案优惠(不含超级置换)'];
-      var bjYhNum=fmtd(bjYh);
-      var superNum=item['超级置换']!==undefined&&item['超级置换']!==null&&item['超级置换']!=='-' ? fmtd(item['超级置换']) : null;
-      if(bjYhNum!==null || superNum!==null){
-        h+='<div class="yh-row">';
-        if(bjYhNum!==null){
-          h+='<div class="yh-chip"><span class="yh-label">备案优惠</span><span class="yh-num">'+fmt(bjYhNum)+'</span></div>';
-        }
-        if(superNum!==null){
-          h+='<div class="yh-chip"><span class="yh-label">超级置换</span><span class="yh-num" style="color:#4CAF50">'+fmt(superNum)+'</span></div>';
-        }
-        h+='</div>';
-        // 备注
-        var notes=[];
-        if(bjYhNum!==null) notes.push('<span class="note-tag note-tag不含">不含超级置换</span>');
-        if(superNum!==null) notes.push('<span class="note-tag note-tag含">另含超级置换¥'+superNum.toLocaleString()+'</span>');
-        if(notes.length>0) h+='<div class="note-row">'+notes.join('')+'</div>';
-      }
-    }
-
-    h+='<div class="card-ft">📋 '+(item['来源']||'')+(item._yxPrice?' &nbsp;|&nbsp; 💰 王朝广宣价':' &nbsp;|&nbsp; 云端实时数据')+'</div>';
-    h+='</div>';
-    return h;
+    var badge=item._yx?'<span class="yx-badge">广宣价</span>':'';
+    var cls=item._yx?'yx':'';
+    return '<div class="card">\
+<div class="card-hd"><span class="series">'+series+'</span><span class="brand-tag tag-'+brand+'">'+brand+'</span></div>\
+<div class="model">'+model+'</div>\
+<div class="price-row">\
+<div class="price-item"><span class="price-label">指导价</span><span class="price-num guide">'+fmt(item._guide)+'</span></div>\
+<div class="price-item"><span class="price-label">广宣价'+badge+'</span><span class="price-num gx '+cls+'">'+item._gx+'</span></div>\
+</div>\
+</div>';
   }).join('');
 }
 
-// ============================================================
-//  品牌切换
-// ============================================================
 function selectBrand(brand){
   currentBrand=brand;
   var tabs=document.querySelectorAll('.brand-tab');
   for(var i=0;i<tabs.length;i++) tabs[i].classList.toggle('active',tabs[i].getAttribute('data-brand')===brand);
   document.getElementById('searchInput').value='';
   document.getElementById('clearBtn').style.display='none';
-  var base=currentBrand==='全部'?allData:allData.filter(function(d){return (d['品牌']||'')===currentBrand});
-  updateStat(base.length, currentBrand);
+  var base=currentBrand==='全部'?allData:allData.filter(function(d){return(d['品牌']||'')===currentBrand});
+  updateStat(base.length,currentBrand);
   renderList(base);
 }
 
-// ============================================================
-//  搜索
-// ============================================================
 function doSearch(){
   var kw=document.getElementById('searchInput').value.trim();
   document.getElementById('clearBtn').style.display=kw?'flex':'none';
-  var base=currentBrand==='全部'?allData:allData.filter(function(d){return (d['品牌']||'')===currentBrand});
+  var base=currentBrand==='全部'?allData:allData.filter(function(d){return(d['品牌']||'')===currentBrand});
   if(!kw){updateStat(base.length,currentBrand);renderList(base);return;}
   var kws=kw.toLowerCase().split(/\s+/).filter(function(k){return k;});
   var r=base.filter(function(d){
@@ -367,28 +258,21 @@ function clearSearch(){
   selectBrand(currentBrand);
 }
 
-// ============================================================
-//  状态栏
-// ============================================================
 function updateStat(count,brand,keyword){
   var txt='';
   if(keyword) txt='找到 '+count+' 条';
   else if(brand&&brand!=='全部') txt=brand+' · '+count+' 条';
-  else txt='共 '+count+' 条车型';
-  if(lastUpdateTime) txt+=' &nbsp;|&nbsp; 更新 '+lastUpdateTime;
+  else txt='共 '+count+' 条';
+  if(lastUpdateTime) txt+=' &nbsp;|&nbsp; '+lastUpdateTime;
   document.getElementById('statText').innerHTML=txt;
 }
 
-// ============================================================
-//  云端加载
-// ============================================================
 function loadCloudData(){
   var stat=document.getElementById('statText');
   var wrap=document.getElementById('listWrap');
   stat.innerHTML='<span class="loading-dot"></span>加载中...';
-  wrap.innerHTML='<div class="loading-tip"><div class="spinner"></div>正在从云端加载数据...</div>';
-  fetch(DATA_URL,{cache:'no-cache',headers:{'Accept':'application/json'}})
-    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+  wrap.innerHTML='<div class="loading-tip"><div class="spinner"></div>正在从云端加载...</div>';
+  fetch(DATA_URL,{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
     .then(function(json){
       if(!json||!Array.isArray(json)||json.length===0) throw new Error('数据为空');
       allData=enrich(json);
@@ -397,15 +281,11 @@ function loadCloudData(){
       selectBrand(currentBrand);
     })
     .catch(function(e){
-      console.error('[加载失败]',e);
-      stat.innerHTML='⚠️ 加载失败，点击刷新重试';
-      wrap.innerHTML='<div class="empty-tip">😅 数据加载失败<br><br><span style="font-size:13px;color:#999">'+esc(e.message)+'</span><br><br><button onclick="loadCloudData()" style="padding:8px 24px;background:#2E7D32;color:#fff;border:none;border-radius:20px;font-size:14px;cursor:pointer">重新加载</button></div>';
+      stat.innerHTML='⚠️ 加载失败';
+      wrap.innerHTML='<div class="empty-tip">😅 加载失败<br><br><button onclick="loadCloudData()" style="padding:8px 24px;background:#2E7D32;color:#fff;border:none;border-radius:20px;font-size:14px;cursor:pointer">重新加载</button></div>';
     });
 }
 
-// ============================================================
-//  启动
-// ============================================================
 loadCloudData();
 setInterval(loadCloudData,30*60*1000);
 </script>
