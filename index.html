@@ -157,8 +157,11 @@ function esc(s){
 }
 
 function enrichData(raw){
-  return raw.map(function(item){
-    var o=Object.assign({},item);
+  var result=[];
+  for(var i=0;i<raw.length;i++){
+    var item=raw[i];
+    var o={};
+    for(var k in item) o[k]=item[k];
     o._guide=fmtPrice(item['指导价']);
     o._sell=fmtPrice(item['销售价']);
     var d=item['备案优惠(不含超级置换)'];
@@ -176,8 +179,9 @@ function enrichData(raw){
     var totalNum=dNum+(sNum||0);
     o._totalDiscount=totalNum>0?('¥'+totalNum.toLocaleString('zh-CN')):'';
     o._showTotal=totalNum>0;
-    return o;
-  });
+    result.push(o);
+  }
+  return result;
 }
 
 // ============================================================
