@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>🚗 买车补上补 - 直播算价</title>
-<script>(function(){var v=location.search.match(/[?&]v=([^&]*)/);if(!v||v[1]!=='7'){location.replace(location.pathname+'?v=7')}})();</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;background:#FFF8F0;min-height:100vh;color:#333}
@@ -40,31 +39,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 .detail-section{background:#fff;margin:0 12px 12px;border-radius:16px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
 
 .price-detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;margin-bottom:16px}
-.price-detail-item{}
 .price-detail-label{font-size:12px;color:#999;margin-bottom:4px}
 .price-detail-val{font-size:18px;font-weight:700;color:#333}
 .price-detail-val.highlight{color:#E65100}
 
-/* ===== 可编辑价格行 ===== */
+/* ===== 可编辑行 ===== */
 .edit-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #f5f5f5}
 .edit-row:last-child{border-bottom:none}
 .edit-left{display:flex;align-items:center;gap:8px}
-.edit-title{font-size:15px;font-weight:600;color:#333}
-.edit-badge{font-size:10px;padding:2px 6px;border-radius:8px;background:#FFF3E0;color:#E65100;font-weight:600}
+.edit-title{font-size:15px;font-weight:600;color:#333;cursor:pointer}
+.edit-badge{font-size:10px;padding:2px 6px;border-radius:8px;background:#FFF3E0;color:#E65100;font-weight:600;cursor:pointer}
 .edit-right{display:flex;align-items:center;gap:8px}
 .edit-val{font-size:18px;font-weight:700;color:#E65100;min-width:100px;text-align:right}
 .edit-arrow{font-size:14px;color:#ccc}
 .edit-calc-hint{font-size:11px;color:#999;margin-top:2px;text-align:right}
 
-/* 权益方案行（不可编辑，仅展示） */
+/* 权益方案行（不可编辑数值，仅展示） */
 .equity-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #f5f5f5}
 .equity-row:last-child{border-bottom:none}
 .equity-left{display:flex;align-items:center;gap:8px}
-.equity-title{font-size:15px;font-weight:600;color:#333}
-.equity-badge{font-size:10px;padding:2px 6px;border-radius:8px;background:#E8F5E9;color:#2E7D32;font-weight:600}
-.equity-right{font-size:18px;font-weight:700;color:#2E7D20;min-width:100px;text-align:right}
+.equity-title{font-size:15px;font-weight:600;color:#333;cursor:pointer}
+.equity-badge{font-size:10px;padding:2px 6px;border-radius:8px;background:#E8F5E9;color:#2E7D32;font-weight:600;cursor:pointer}
+.equity-right{font-size:18px;font-weight:700;color:#2E7D20;min-width:100px;text-align:right;word-break:break-all}
 
-/* ===== 输入弹窗 ===== */
+/* ===== 输入弹窗 - 价格 ===== */
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:flex-end;justify-content:center}
 .modal-overlay.show{display:flex}
 .modal-box{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:500px;padding:24px 20px 34px;animation:slideUp .25s ease}
@@ -79,6 +77,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 .modal-btn-cancel{background:#f5f5f5;color:#666}
 .modal-btn-confirm{background:linear-gradient(135deg,#FF9800,#E65100);color:#fff;box-shadow:0 4px 12px rgba(230,81,0,.3)}
 
+/* ===== 文字编辑弹窗 ===== */
+.text-modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.text-modal-overlay.show{display:flex}
+.text-modal-box{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:500px;padding:24px 20px 34px;animation:slideUp .25s ease}
+.text-modal-title{font-size:17px;font-weight:700;text-align:center;margin-bottom:20px;color:#333}
+.text-modal-input{width:100%;border:1px solid #eee;border-radius:12px;padding:12px 16px;font-size:16px;outline:none;margin-bottom:20px}
+.text-modal-input:focus{border-color:#E65100}
+.text-modal-btns{display:flex;gap:12px}
+.text-modal-btn{flex:1;padding:14px;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;border:none}
+.text-modal-btn-cancel{background:#f5f5f5;color:#666}
+.text-modal-btn-confirm{background:linear-gradient(135deg,#FF9800,#E65100);color:#fff;box-shadow:0 4px 12px rgba(230,81,0,.3)}
+
 /* ===== 底部按钮 ===== */
 .bottom-action{margin:12px 20px 30px}
 .action-btn{width:100%;padding:16px;border-radius:30px;font-size:17px;font-weight:700;cursor:pointer;border:none;background:linear-gradient(135deg,#FFC107,#FF9800);color:#fff;box-shadow:0 4px 16px rgba(255,152,0,.35);text-align:center}
@@ -89,18 +99,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 .list-card{background:#fff;border-radius:12px;margin-bottom:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.06);cursor:pointer;transition:all .15s;border:2px solid transparent}
 .list-card:active{transform:scale(.98)}
 .list-card.selected{border-color:#E65100;background:#FFF8F0}
-.list-card .lc-name{font-size:15px;font-weight:700;color:#333;margin-bottom:2px}
-.list-card .lc-model{font-size:13px;color:#888}
-.list-card .lc-guide{font-size:13px;color:#E65100;font-weight:600;margin-top:4px}
-.list-card .lc-check{float:right;color:#E65100;font-size:18px;display:none}
+.lc-name{font-size:15px;font-weight:700;color:#333;margin-bottom:2px}
+.lc-model{font-size:13px;color:#888}
+.lc-guide{font-size:13px;color:#E65100;font-weight:600;margin-top:4px}
+.lc-check{float:right;color:#E65100;font-size:18px;display:none}
 .list-card.selected .lc-check{display:inline}
 
-/* ===== 搜索栏 ===== */
 .search-line{display:flex;gap:8px;padding:8px 12px}
 .search-input{flex:1;background:#fff;border-radius:20px;padding:0 14px;height:38px;border:1px solid #eee;font-size:14px;outline:none}
 .search-input:focus{border-color:#E65100}
-
-/* ===== 空状态 ===== */
+.brand-tag{padding:8px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;background:#f5f5f5;color:#666;border:1.5px solid transparent;white-space:nowrap}
+.brand-tag.active{background:#FFF3E0;color:#E65100;border-color:#FFE0B2}
 .empty-tip{text-align:center;padding:60px 0;color:#bbb;font-size:16px}
 .loading-tip{text-align:center;padding:60px 0;color:#999;font-size:15px}
 </style>
@@ -114,7 +123,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
   <button class="city-btn" id="cityBtn">佛山 ▼</button>
 </div>
 
-<!-- 车型信息头部（选中车型后显示） -->
+<!-- 车型信息头部 -->
 <div class="car-header" id="carHeader" style="display:none">
   <div class="car-name-row">
     <span class="car-series" id="dispSeries">海狮05EV</span>
@@ -124,8 +133,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
   <div class="guide-price-row">指导价 <span class="guide-price-val" id="dispGuide">12.99万</span></div>
 </div>
 
-<!-- Tab 切换（购新车 / 置换换新） -->
-<div class="tab-bar" id="tabBar">
+<!-- Tab 切换 -->
+<div class="tab-bar hidden-tab" id="tabBar">
   <div class="tab-item active" data-tab="new" onclick="switchTab('new')">
     <div>购新车</div>
   </div>
@@ -135,35 +144,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 </div>
 
 <!-- 预计补后价 -->
-<div class="result-box">
+<div class="result-box" id="resultBox" style="display:none">
   <div class="result-label">预计补后价(元)</div>
   <div class="result-price" id="finalPrice">101,400</div>
   <div class="result-note">*以上金额是为你匹配到的最佳补贴</div>
 </div>
 
 <!-- 价格明细 -->
-<div class="detail-section">
-  <!-- 顶部三格摘要 -->
-  <div class="price-detail-grid">
-    <div class="price-detail-item">
-      <div class="price-detail-label">新车指导价</div>
-      <div class="price-detail-val" id="dGuide">129,900</div>
-    </div>
-    <div class="price-detail-item">
-      <div class="price-detail-label">平台补贴</div>
-      <div class="price-detail-val highlight" id="dPlatform">500</div>
-    </div>
-    <div class="price-detail-item">
-      <div class="price-detail-label">商家优惠</div>
-      <div class="price-detail-val highlight" id="dDealer">28,000</div>
-    </div>
-  </div>
+<div class="detail-section" id="detailSection" style="display:none">
 
-  <!-- 可编辑行：新车优惠（备案优惠+超级置换等） -->
+  <!-- 优惠 -->
   <div class="edit-row" onclick="openEdit('discount')">
     <div class="edit-left">
-      <span class="edit-title">新车优惠</span>
-      <span class="edit-badge">买车补上补</span>
+      <span class="edit-title" id="titleDiscount" onclick="event.stopPropagation();openTextEdit('titleDiscount','优惠')">优惠</span>
+      <span class="edit-badge" id="badgeDiscount" onclick="event.stopPropagation();openTextEdit('badgeDiscount','买车补上补')">买车补上补</span>
     </div>
     <div class="edit-right">
       <span class="edit-val" id="eDiscount">共补 28,500 元</span>
@@ -171,11 +165,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
     </div>
   </div>
 
-  <!-- 可编辑行：平台补贴 -->
+  <!-- ZF补贴权益 -->
   <div class="edit-row" onclick="openEdit('platform')">
     <div class="edit-left">
-      <span class="edit-title">平台补贴</span>
-      <span class="edit-badge">审核后返现</span>
+      <span class="edit-title" id="titlePlatform" onclick="event.stopPropagation();openTextEdit('titlePlatform','ZF补贴权益')">ZF补贴权益</span>
+      <span class="edit-badge" id="badgePlatform" onclick="event.stopPropagation();openTextEdit('badgePlatform','审核后返现')">审核后返现</span>
     </div>
     <div class="edit-right">
       <span class="edit-val" id="ePlatform">500元 ▸</span>
@@ -183,52 +177,36 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
     </div>
   </div>
 
-  <!-- 可编辑行：商家优惠 -->
-  <div class="edit-row" onclick="openEdit('dealer')">
+  <!-- 置换残值 -->
+  <div class="edit-row" onclick="openEdit('tradein')">
     <div class="edit-left">
-      <span class="edit-title">商家优惠</span>
-      <span class="edit-badge">车价直减</span>
+      <span class="edit-title" id="titleTradein" onclick="event.stopPropagation();openTextEdit('titleTradein','置换残值')">置换残值</span>
+      <span class="edit-badge" id="badgeTradein" onclick="event.stopPropagation();openTextEdit('badgeTradein','旧车估值')">旧车估值</span>
     </div>
     <div class="edit-right">
-      <span class="edit-val" id="eDealer">28000元 ▸</span>
-      <span class="edit-arrow"></span>
+      <span class="edit-val" id="eTradein">输入残值 ▸</span>
+      <div class="edit-calc-hint" id="eTradeinHint">残值输入后自动算补贴</div>
     </div>
   </div>
 
-  <!-- 可编辑行：国补 -->
-  <div class="edit-row" onclick="openEdit('guobu')">
+  <!-- 置换补贴（=残值×8%，单独一行） -->
+  <div class="edit-row" style="background:#FFF8E1">
     <div class="edit-left">
-      <span class="edit-title">国补</span>
-      <span class="edit-badge">国家补贴</span>
+      <span class="edit-title" id="titleTradeBonus" onclick="event.stopPropagation();openTextEdit('titleTradeBonus','置换补贴')">置换补贴</span>
+      <span class="edit-badge" id="badgeTradeBonus" onclick="event.stopPropagation();openTextEdit('badgeTradeBonus','残值×8%')">残值×8%</span>
     </div>
     <div class="edit-right">
-      <span class="edit-val" id="eGuobu">20000元 ▸</span>
-      <span class="edit-arrow"></span>
+      <span class="edit-val" id="eTradeBonus">—</span>
     </div>
   </div>
 
-  <!-- 可编辑行：置换补贴（仅在"置换换新"tab显示，输入残值 × 0.08） -->
-  <div class="edit-row" id="rowTradein" style="display:none" onclick="openEdit('tradein')">
-    <div class="edit-left">
-      <span class="edit-title">置换补贴</span>
-      <span class="edit-badge">残值×8%</span>
-    </div>
-    <div class="edit-right">
-      <div>
-        <span class="edit-val" id="eTradein">1600元 ▸</span>
-        <div class="edit-calc-hint" id="eTradeinHint">输入残值自动×0.08</div>
-      </div>
-      <span class="edit-arrow"></span>
-    </div>
-  </div>
-
-  <!-- 展示行：权益方案（不影响补后价） -->
+  <!-- 至高权益 -->
   <div class="equity-row">
     <div class="equity-left">
-      <span class="equity-title">权益方案</span>
-      <span class="equity-badge">赠送</span>
+      <span class="equity-title" id="titleEquity" onclick="openTextEdit('titleEquity','至高权益')">至高权益</span>
+      <span class="equity-badge" id="badgeEquity" onclick="openTextEdit('badgeEquity','赠送')">赠送</span>
     </div>
-    <div class="equity-right" id="eEquity">保养套餐 · 充电桩 · 流量包</div>
+    <div class="equity-right" id="eEquity" onclick="openTextEdit('eEquity','保养套餐 · 充电桩 · 流量包')">保养套餐 · 充电桩 · 流量包</div>
   </div>
 
   <!-- 经销商信息 -->
@@ -242,20 +220,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 </div>
 
 <!-- 底部按钮 -->
-<div class="bottom-action">
+<div class="bottom-action" id="bottomAction" style="display:none">
   <button class="action-btn" onclick="alert('请联系经销商获取最新报价')">免费领取</button>
   <div class="action-sub" id="actionSub">28500元购车补贴</div>
 </div>
 
 <!-- ========== 车型选择视图 ========== -->
-<div class="car-list-area" id="carListView" style="display:none">
+<div class="car-list-area" id="carListView">
+  <div style="display:flex;gap:6px;padding:8px 0;flex-wrap:wrap" id="brandBar">
+    <div class="brand-tag active" data-brand="全部" onclick="filterBrand('全部')">全部</div>
+    <div class="brand-tag" data-brand="王朝" onclick="filterBrand('王朝')">王朝</div>
+    <div class="brand-tag" data-brand="海洋" onclick="filterBrand('海洋')">海洋</div>
+    <div class="brand-tag" data-brand="腾势" onclick="filterBrand('腾势')">腾势</div>
+  </div>
   <div class="search-line">
     <input type="text" class="search-input" id="listSearch" placeholder="搜索车系/车型..." oninput="filterCarList()">
   </div>
   <div id="carListContent"><div class="loading-tip">加载中...</div></div>
 </div>
 
-<!-- ========== 编辑弹窗 ========== -->
+<!-- ========== 价格编辑弹窗 ========== -->
 <div class="modal-overlay" id="editModal">
   <div class="modal-box">
     <div class="modal-title" id="modalTitle">编辑价格</div>
@@ -266,6 +250,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
     <div class="modal-btns">
       <button class="modal-btn modal-btn-cancel" onclick="closeEdit()">取消</button>
       <button class="modal-btn modal-btn-confirm" onclick="confirmEdit()">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 文字编辑弹窗 ========== -->
+<div class="text-modal-overlay" id="textModal">
+  <div class="text-modal-box">
+    <div class="text-modal-title" id="textModalTitle">编辑文字</div>
+    <input type="text" class="text-modal-input" id="textInput" placeholder="输入新文字">
+    <div class="text-modal-btns">
+      <button class="text-modal-btn text-modal-btn-cancel" onclick="closeTextEdit()">取消</button>
+      <button class="text-modal-btn text-modal-btn-confirm" onclick="confirmTextEdit()">确定</button>
     </div>
   </div>
 </div>
@@ -282,23 +278,38 @@ var currentCar = null;
 //  可编辑价格字段
 // ============================================================
 var prices = {
-  guide: 129900,       // 指导价
-  platform: 500,        // 平台补贴
-  dealer: 28000,        // 商家优惠
-  discount: 28500,      // 新车优惠（备案优惠+超级置换等）
-  guobu: 20000,         // 国补
-  tradein: 20000        // 置换残值（显示时 ×0.08）
+  guide: 129900,
+  platform: 0,
+  discount: 0,
+  tradein: 0
 };
 
-// 当前激活的 tab
 var currentTab = 'new';
+var currentBrand = '全部';
 
 // ============================================================
 //  工具函数
 // ============================================================
+
+/**
+ * 格式化数字（带逗号）
+ */
 function fmtNum(n){
   if(n===null||n===undefined||isNaN(n))return '0';
   return n.toLocaleString('zh-CN');
+}
+
+/**
+ * 模糊后四位（仅用于预计补后价）
+ * 例如：101400 → "10****"
+ */
+function fmtNumBlur(n){
+  if(n===null||n===undefined||isNaN(n))return '0';
+  var s = n.toLocaleString('zh-CN');
+  var len = s.replace(/,/g,'').length;
+  if(len <= 4) return '*'.repeat(len);
+  var visible = s.length - 4;
+  return s.substring(0, visible) + '****';
 }
 
 function fmtWan(n){
@@ -316,40 +327,40 @@ function esc(s){
 
 // ============================================================
 //  计算最终价格 & 刷新显示
-//  补后价 = 指导价 - 平台补贴 - 商家优惠
-//  （国补、权益方案、置换补贴不参与计算）
+//  补后价 = 指导价 - 平台补贴 - 商家优惠 - 国补
+//  （新车优惠、置换补贴、权益方案不参与计算）
 // ============================================================
 function calcAndRender(){
-  var final = prices.guide - prices.platform - prices.dealer;
-  document.getElementById('finalPrice').textContent = fmtNum(final);
+  // 置换补贴 = 残值 × 8%
+  var tradeinBonus = Math.round(prices.tradein * 0.08);
+  
+  // 补后价 = 指导价 - 优惠 - ZF补贴权益 - 置换补贴
+  var final = prices.guide - prices.discount - prices.platform - tradeinBonus;
+  document.getElementById('finalPrice').textContent = fmtNumBlur(final);
 
-  // 明细区三格
-  document.getElementById('dGuide').textContent = fmtNum(prices.guide);
-  document.getElementById('dPlatform').textContent = fmtNum(prices.platform);
-  document.getElementById('dDealer').textContent = fmtNum(prices.dealer);
-
-  // 编辑行
+  // 编辑行显示值
   document.getElementById('eDiscount').textContent = '共补 ' + fmtNum(prices.discount) + ' 元';
   document.getElementById('ePlatform').textContent = fmtNum(prices.platform) + '元 ▸';
-  document.getElementById('eDealer').textContent = fmtNum(prices.dealer) + '元 ▸';
-  document.getElementById('eGuobu').textContent = fmtNum(prices.guobu) + '元 ▸';
+  
+  // 置换残值显示（纯金额）
+  if(prices.tradein > 0){
+    document.getElementById('eTradein').textContent = fmtNum(prices.tradein) + '元 ▸';
+  } else {
+    document.getElementById('eTradein').textContent = '输入残值 ▸';
+  }
+  
+  // 置换补贴显示（残值×8%）
+  if(prices.tradein > 0){
+    document.getElementById('eTradeBonus').textContent = fmtNum(tradeinBonus) + '元';
+  } else {
+    document.getElementById('eTradeBonus').textContent = '—';
+  }
 
-  // 置换补贴 = 残值 × 0.08
-  var tradeinCalc = Math.round(prices.tradein * 0.08);
-  document.getElementById('eTradein').textContent = fmtNum(tradeinCalc) + '元 ▸';
-  document.getElementById('eTradeinHint').textContent = '残值' + fmtNum(prices.tradein) + ' × 0.08 = ' + fmtNum(tradeinCalc);
-
-  // 底部按钮副标题
   document.getElementById('actionSub').textContent = fmtNum(prices.discount) + '元购车补贴';
-
-  // 根据tab控制置换补贴行的显隐
-  document.getElementById('rowTradein').style.display = (currentTab === 'trade') ? '' : 'none';
 }
 
 // ============================================================
-//  Tab 切换（购新车 / 置换换新）
-//  购新车：不显示置换补贴行
-//  置换换新：显示置换补贴行（残值×0.08）
+//  Tab 切换
 // ============================================================
 function switchTab(tab){
   currentTab = tab;
@@ -361,21 +372,19 @@ function switchTab(tab){
 }
 
 // ============================================================
-//  编辑弹窗
+//  价格编辑弹窗
 // ============================================================
 var editingField = null;
 
 function openEdit(field){
   editingField = field;
   var titles = {
-    discount:'新车优惠（备案优惠+超级置换等）',
-    platform:'平台补贴',
-    dealer:'商家优惠（车价直减）',
-    guobu:'国补（国家补贴）',
-    tradein:'置换残值（将自动×0.08计算补贴）'
+    discount:'优惠',
+    platform:'ZF补贴权益',
+    tradein:'置换残值（将自动×8%加到补贴）'
   };
   document.getElementById('modalTitle').textContent = titles[field] || '编辑价格';
-  var showVal = (field === 'tradein') ? prices.tradein : prices[field];
+  var showVal = prices[field];
   document.getElementById('modalInput').value = showVal || '';
   document.getElementById('editModal').classList.add('show');
   setTimeout(function(){document.getElementById('modalInput').focus()}, 300);
@@ -399,9 +408,40 @@ function confirmEdit(){
   closeEdit();
 }
 
-// 点击遮罩关闭
 document.getElementById('editModal').addEventListener('click', function(e){
   if(e.target === this) closeEdit();
+});
+
+// ============================================================
+//  文字编辑弹窗（点击标题/角标/权益内容可自定义文字）
+// ============================================================
+var textEditingEl = null;
+
+function openTextEdit(elId, currentText){
+  textEditingEl = elId;
+  var el = document.getElementById(elId);
+  document.getElementById('textModalTitle').textContent = '编辑文字';
+  document.getElementById('textInput').value = el.textContent || currentText || '';
+  document.getElementById('textModal').classList.add('show');
+  setTimeout(function(){document.getElementById('textInput').focus();document.getElementById('textInput').select()}, 300);
+}
+
+function closeTextEdit(){
+  document.getElementById('textModal').classList.remove('show');
+  textEditingEl = null;
+}
+
+function confirmTextEdit(){
+  var val = (document.getElementById('textInput').value || '').trim();
+  if(!val){ alert('文字不能为空'); return; }
+  if(textEditingEl){
+    document.getElementById(textEditingEl).textContent = val;
+  }
+  closeTextEdit();
+}
+
+document.getElementById('textModal').addEventListener('click', function(e){
+  if(e.target === this) closeTextEdit();
 });
 
 // ============================================================
@@ -410,31 +450,25 @@ document.getElementById('editModal').addEventListener('click', function(e){
 function selectCar(car){
   currentCar = car;
   prices.guide = parseInt(car['指导价']) || 0;
+  prices.discount = 0;  // 初始不读取优惠价
+  prices.platform = 0;
+  prices.tradein = 0;
 
-  // 从数据中读取优惠
-  var d = parseInt(car['备案优惠(不含超级置换)']) || 0;
-  var s = parseInt(car['超级置换']) || 0;
-  prices.discount = d + s;
-  prices.dealer = d;
-
-  // 显示车型信息
   document.getElementById('dispSeries').textContent = car['车系全名'] || car['车系'] || '';
   document.getElementById('dispModel').textContent = car['车型名称'] || '';
   document.getElementById('dispGuide').textContent = fmtWan(prices.guide);
   document.getElementById('carHeader').style.display = 'block';
 
-  // 经销商信息
   document.getElementById('dealerName').textContent = car['来源'] || '比亚迪4S店';
   document.getElementById('dealerAddr').textContent = car['备注'] || '';
 
-  // 显示详情区
   document.getElementById('carListView').style.display = 'none';
   var tb = document.getElementById('tabBar');
   tb.style.display = '';
   tb.classList.remove('hidden-tab');
-  document.querySelector('.result-box').style.display = 'block';
-  document.querySelector('.detail-section').style.display = 'block';
-  document.querySelector('.bottom-action').style.display = 'block';
+  document.getElementById('resultBox').style.display = 'block';
+  document.getElementById('detailSection').style.display = 'block';
+  document.getElementById('bottomAction').style.display = 'block';
 
   calcAndRender();
 }
@@ -447,14 +481,17 @@ function showCarList(){
   document.getElementById('carHeader').style.display = 'none';
   var tb = document.getElementById('tabBar');
   tb.classList.add('hidden-tab');
-  document.querySelector('.result-box').style.display = 'none';
-  document.querySelector('.detail-section').style.display = 'none';
-  document.querySelector('.bottom-action').style.display = 'none';
-  renderCarList(allCars);
+  document.getElementById('resultBox').style.display = 'none';
+  document.getElementById('detailSection').style.display = 'none';
+  document.getElementById('bottomAction').style.display = 'none';
+  renderCarList(getFilteredCars());
 }
 
 function renderCarList(list){
   var w = document.getElementById('carListContent');
+  if(!w){
+    w = document.getElementById('carListView');
+  }
   if(!list || list.length === 0){
     w.innerHTML = '<div class="empty-tip">😅 未找到匹配车型</div>';
     return;
@@ -471,25 +508,36 @@ function renderCarList(list){
 }
 
 function selectCarByIndex(idx){
-  var kw = (document.getElementById('listSearch').value || '').trim().toLowerCase();
+  var list = getFilteredCars();
+  if(list[idx]) selectCar(list[idx]);
+}
+
+function filterBrand(brand){
+  currentBrand = brand;
+  var tags = document.querySelectorAll('.brand-tag');
+  for(var i=0;i<tags.length;i++){
+    tags[i].classList.toggle('active', tags[i].getAttribute('data-brand') === brand);
+  }
+  renderCarList(getFilteredCars());
+}
+
+function getFilteredCars(){
   var list = allCars;
+  if(currentBrand !== '全部'){
+    list = list.filter(function(item){ return (item['品牌']||'') === currentBrand; });
+  }
+  var kw = (document.getElementById('listSearch').value || '').trim().toLowerCase();
   if(kw){
     list = list.filter(function(item){
       var t = [item['车系全名']||'', item['车型名称']||'', item['品牌']||'', item['车系']||''].join(' ').toLowerCase();
       return t.indexOf(kw) >= 0;
     });
   }
-  if(list[idx]) selectCar(list[idx]);
+  return list;
 }
 
 function filterCarList(){
-  var kw = (document.getElementById('listSearch').value || '').trim().toLowerCase();
-  if(!kw){ renderCarList(allCars); return; }
-  var filtered = allCars.filter(function(item){
-    var t = [item['车系全名']||'', item['车型名称']||'', item['品牌']||'', item['车系']||''].join(' ').toLowerCase();
-    return t.indexOf(kw) >= 0;
-  });
-  renderCarList(filtered);
+  renderCarList(getFilteredCars());
 }
 
 function fmtPrice(v){
@@ -513,8 +561,8 @@ function loadCloudData(){
     })
     .catch(function(err){
       console.error('[加载失败]', err);
-      document.getElementById('carListContent').innerHTML =
-        '<div class="empty-tip">😅 数据加载失败<br><br><span style="font-size:13px;color:#999">'+esc(err.message)+'</span><br><br>'
+      var lv = document.getElementById('carListView');
+      lv.innerHTML = '<div class="empty-tip">😅 数据加载失败<br><br><span style="font-size:13px;color:#999">'+esc(err.message)+'</span><br><br>'
         +'<button onclick="loadCloudData()" style="padding:8px 24px;background:#E65100;color:#fff;border:none;border-radius:20px;font-size:14px;cursor:pointer">重新加载</button></div>';
     });
 }
