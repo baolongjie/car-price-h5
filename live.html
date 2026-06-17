@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>🚗 买车补上补 - 直播算价</title>
-<script>(function(){var v=location.search.match(/[?&]v=([^&]*)/);if(!v||v[1]!=='6'){location.replace(location.pathname+'?v=6')}})();</script>
+<script>(function(){var v=location.search.match(/[?&]v=([^&]*)/);if(!v||v[1]!=='7'){location.replace(location.pathname+'?v=7')}})();</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;background:#FFF8F0;min-height:100vh;color:#333}
@@ -25,7 +25,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 .guide-price-val{color:#E65100;font-weight:700;font-size:18px}
 
 /* ===== Tab 切换栏（购新车 / 置换换新） ===== */
-.tab-bar{display:flex!important;background:#fff;margin:10px 12px;border-radius:12px;padding:4px;gap:4px;box-shadow:0 2px 8px rgba(230,81,0,.15);border:1.5px solid #FFE0B2}
+.tab-bar{display:flex;background:#fff;margin:10px 12px;border-radius:12px;padding:4px;gap:4px;box-shadow:0 2px 8px rgba(230,81,0,.15);border:1.5px solid #FFE0B2}
+.tab-bar.hidden-tab{display:none!important}
 .tab-item{flex:1;text-align:center;padding:12px 8px;border-radius:10px;font-size:15px;font-weight:700;color:#999;cursor:pointer;transition:all .2s;border:none;background:none}
 .tab-item.active{background:#FFF3E0;color:#E65100}
 
@@ -428,7 +429,9 @@ function selectCar(car){
 
   // 显示详情区
   document.getElementById('carListView').style.display = 'none';
-  document.getElementById('tabBar').style.display = 'flex';
+  var tb = document.getElementById('tabBar');
+  tb.style.display = '';
+  tb.classList.remove('hidden-tab');
   document.querySelector('.result-box').style.display = 'block';
   document.querySelector('.detail-section').style.display = 'block';
   document.querySelector('.bottom-action').style.display = 'block';
@@ -442,7 +445,8 @@ function selectCar(car){
 function showCarList(){
   document.getElementById('carListView').style.display = 'block';
   document.getElementById('carHeader').style.display = 'none';
-  document.getElementById('tabBar').style.display = 'none';
+  var tb = document.getElementById('tabBar');
+  tb.classList.add('hidden-tab');
   document.querySelector('.result-box').style.display = 'none';
   document.querySelector('.detail-section').style.display = 'none';
   document.querySelector('.bottom-action').style.display = 'none';
