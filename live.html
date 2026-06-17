@@ -23,11 +23,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 .guide-price-row{font-size:15px;color:#666}
 .guide-price-val{color:#E65100;font-weight:700;font-size:18px}
 
-/* ===== Tab 切换栏（两个tab） ===== */
-.tab-bar{display:flex;background:#fff;margin:0 12px;border-radius:12px;padding:4px;gap:4px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.tab-item{flex:1;text-align:center;padding:10px 8px;border-radius:10px;font-size:14px;font-weight:600;color:#999;cursor:pointer;transition:all .2s;border:none;background:none}
-.tab-item.active{background:#FFF3E0;color:#E65100}
-
 /* ===== 预计补后价（大字显示） ===== */
 .result-box{background:#fff;margin:12px;border-radius:16px;padding:24px 16px;text-align:center;box-shadow:0 2px 12px rgba(230,81,0,.1)}
 .result-label{font-size:14px;color:#999;margin-bottom:8px}
@@ -52,6 +47,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 .edit-right{display:flex;align-items:center;gap:8px}
 .edit-val{font-size:18px;font-weight:700;color:#E65100;min-width:100px;text-align:right}
 .edit-arrow{font-size:14px;color:#ccc}
+.edit-calc-hint{font-size:11px;color:#999;margin-top:2px;text-align:right}
 
 /* 权益方案行（不可编辑，仅展示） */
 .equity-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #f5f5f5}
@@ -121,16 +117,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
   <div class="guide-price-row">指导价 <span class="guide-price-val" id="dispGuide">12.99万</span></div>
 </div>
 
-<!-- Tab 切换（购新车 / 置换换新） -->
-<div class="tab-bar" id="tabBar">
-  <div class="tab-item active" data-tab="new" onclick="switchTab('new')">
-    <div>购新车</div>
-  </div>
-  <div class="tab-item" data-tab="trade" onclick="switchTab('trade')">
-    <div>置换换新</div>
-  </div>
-</div>
-
 <!-- 预计补后价 -->
 <div class="result-box">
   <div class="result-label">预计补后价(元)</div>
@@ -156,7 +142,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
     </div>
   </div>
 
-  <!-- 可编辑行：新车优惠（备案优惠+超级置换） -->
+  <!-- 可编辑行：新车优惠（备案优惠+超级置换等） -->
   <div class="edit-row" onclick="openEdit('discount')">
     <div class="edit-left">
       <span class="edit-title">新车优惠</span>
@@ -200,6 +186,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
     </div>
     <div class="edit-right">
       <span class="edit-val" id="eGuobu">20000元 ▸</span>
+      <span class="edit-arrow"></span>
+    </div>
+  </div>
+
+  <!-- 可编辑行：置换补贴（输入残值 × 0.08 自动计算） -->
+  <div class="edit-row" onclick="openEdit('tradein')">
+    <div class="edit-left">
+      <span class="edit-title">置换补贴</span>
+      <span class="edit-badge">残值×8%</span>
+    </div>
+    <div class="edit-right">
+      <div>
+        <span class="edit-val" id="eTradein">1600元 ▸</span>
+        <div class="edit-calc-hint" id="eTradeinHint">输入残值自动×0.08</div>
+      </div>
       <span class="edit-arrow"></span>
     </div>
   </div>
@@ -268,11 +269,9 @@ var prices = {
   platform: 500,        // 平台补贴
   dealer: 28000,        // 商家优惠
   discount: 28500,      // 新车优惠（备案优惠+超级置换等）
-  guobu: 20000          // 国补（不影响补后价计算）
+  guobu: 20000,         // 国补
+  tradein: 20000        // 置换残值（显示时 ×0.08）
 };
-
-// 当前激活的 tab
-var currentTab = 'new';
 
 // ============================================================
 //  工具函数
@@ -298,7 +297,7 @@ function esc(s){
 // ============================================================
 //  计算最终价格 & 刷新显示
 //  补后价 = 指导价 - 平台补贴 - 商家优惠
-//  （国补和权益方案不参与计算）
+//  （国补、权益方案、置换补贴不参与计算）
 // ============================================================
 function calcAndRender(){
   var final = prices.guide - prices.platform - prices.dealer;
@@ -315,20 +314,13 @@ function calcAndRender(){
   document.getElementById('eDealer').textContent = fmtNum(prices.dealer) + '元 ▸';
   document.getElementById('eGuobu').textContent = fmtNum(prices.guobu) + '元 ▸';
 
+  // 置换补贴 = 残值 × 0.08
+  var tradeinCalc = Math.round(prices.tradein * 0.08);
+  document.getElementById('eTradein').textContent = fmtNum(tradeinCalc) + '元 ▸';
+  document.getElementById('eTradeinHint').textContent = '残值' + fmtNum(prices.tradein) + ' × 0.08 = ' + fmtNum(tradeinCalc);
+
   // 底部按钮副标题
   document.getElementById('actionSub').textContent = fmtNum(prices.discount) + '元购车补贴';
-}
-
-// ============================================================
-//  Tab 切换（购新车 / 置换换新）
-// ============================================================
-function switchTab(tab){
-  currentTab = tab;
-  var tabs = document.querySelectorAll('.tab-item');
-  for(var i=0;i<tabs.length;i++){
-    tabs[i].classList.toggle('active', tabs[i].getAttribute('data-tab') === tab);
-  }
-  calcAndRender();
 }
 
 // ============================================================
@@ -342,10 +334,13 @@ function openEdit(field){
     discount:'新车优惠（备案优惠+超级置换等）',
     platform:'平台补贴',
     dealer:'商家优惠（车价直减）',
-    guobu:'国补（国家补贴）'
+    guobu:'国补（国家补贴）',
+    tradein:'置换残值（将自动×0.08计算补贴）'
   };
   document.getElementById('modalTitle').textContent = titles[field] || '编辑价格';
-  document.getElementById('modalInput').value = prices[field] || '';
+  // 置换显示原始残值，其他显示最终金额
+  var showVal = (field === 'tradein') ? prices.tradein : prices[field];
+  document.getElementById('modalInput').value = showVal || '';
   document.getElementById('editModal').classList.add('show');
   setTimeout(function(){document.getElementById('modalInput').focus()}, 300);
 }
@@ -398,7 +393,6 @@ function selectCar(car){
 
   // 显示详情区
   document.getElementById('carListView').style.display = 'none';
-  document.getElementById('tabBar').style.display = 'flex';
   document.querySelector('.result-box').style.display = 'block';
   document.querySelector('.detail-section').style.display = 'block';
   document.querySelector('.bottom-action').style.display = 'block';
@@ -412,7 +406,6 @@ function selectCar(car){
 function showCarList(){
   document.getElementById('carListView').style.display = 'block';
   document.getElementById('carHeader').style.display = 'none';
-  document.getElementById('tabBar').style.display = 'none';
   document.querySelector('.result-box').style.display = 'none';
   document.querySelector('.detail-section').style.display = 'none';
   document.querySelector('.bottom-action').style.display = 'none';
