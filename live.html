@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>🚗 买车补上补 - 直播算价</title>
-<script>(function(){var v=location.search.match(/[?&]v=([^&]*)/);if(!v||v[1]!=='4'){location.replace(location.pathname+'?v=4')}})();</script>
+<script>(function(){var v=location.search.match(/[?&]v=([^&]*)/);if(!v||v[1]!=='5'){location.replace(location.pathname+'?v=5')}})();</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;background:#FFF8F0;min-height:100vh;color:#333}
@@ -23,6 +23,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 .car-model-text{font-size:15px;color:#666;margin-bottom:4px}
 .guide-price-row{font-size:15px;color:#666}
 .guide-price-val{color:#E65100;font-weight:700;font-size:18px}
+
+/* ===== Tab 切换栏（购新车 / 置换换新） ===== */
+.tab-bar{display:flex;background:#fff;margin:0 12px;border-radius:12px;padding:4px;gap:4px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.tab-item{flex:1;text-align:center;padding:10px 8px;border-radius:10px;font-size:14px;font-weight:600;color:#999;cursor:pointer;transition:all .2s;border:none;background:none}
+.tab-item.active{background:#FFF3E0;color:#E65100}
 
 /* ===== 预计补后价（大字显示） ===== */
 .result-box{background:#fff;margin:12px;border-radius:16px;padding:24px 16px;text-align:center;box-shadow:0 2px 12px rgba(230,81,0,.1)}
@@ -118,6 +123,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
   <div class="guide-price-row">指导价 <span class="guide-price-val" id="dispGuide">12.99万</span></div>
 </div>
 
+<!-- Tab 切换（购新车 / 置换换新） -->
+<div class="tab-bar" id="tabBar">
+  <div class="tab-item active" data-tab="new" onclick="switchTab('new')">
+    <div>购新车</div>
+  </div>
+  <div class="tab-item" data-tab="trade" onclick="switchTab('trade')">
+    <div>置换换新</div>
+  </div>
+</div>
+
 <!-- 预计补后价 -->
 <div class="result-box">
   <div class="result-label">预计补后价(元)</div>
@@ -191,8 +206,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
     </div>
   </div>
 
-  <!-- 可编辑行：置换补贴（输入残值 × 0.08 自动计算） -->
-  <div class="edit-row" onclick="openEdit('tradein')">
+  <!-- 可编辑行：置换补贴（仅在"置换换新"tab显示，输入残值 × 0.08） -->
+  <div class="edit-row" id="rowTradein" style="display:none" onclick="openEdit('tradein')">
     <div class="edit-left">
       <span class="edit-title">置换补贴</span>
       <span class="edit-badge">残值×8%</span>
@@ -274,6 +289,9 @@ var prices = {
   tradein: 20000        // 置换残值（显示时 ×0.08）
 };
 
+// 当前激活的 tab
+var currentTab = 'new';
+
 // ============================================================
 //  工具函数
 // ============================================================
@@ -322,6 +340,23 @@ function calcAndRender(){
 
   // 底部按钮副标题
   document.getElementById('actionSub').textContent = fmtNum(prices.discount) + '元购车补贴';
+
+  // 根据tab控制置换补贴行的显隐
+  document.getElementById('rowTradein').style.display = (currentTab === 'trade') ? '' : 'none';
+}
+
+// ============================================================
+//  Tab 切换（购新车 / 置换换新）
+//  购新车：不显示置换补贴行
+//  置换换新：显示置换补贴行（残值×0.08）
+// ============================================================
+function switchTab(tab){
+  currentTab = tab;
+  var tabs = document.querySelectorAll('.tab-item');
+  for(var i=0;i<tabs.length;i++){
+    tabs[i].classList.toggle('active', tabs[i].getAttribute('data-tab') === tab);
+  }
+  calcAndRender();
 }
 
 // ============================================================
@@ -339,7 +374,6 @@ function openEdit(field){
     tradein:'置换残值（将自动×0.08计算补贴）'
   };
   document.getElementById('modalTitle').textContent = titles[field] || '编辑价格';
-  // 置换显示原始残值，其他显示最终金额
   var showVal = (field === 'tradein') ? prices.tradein : prices[field];
   document.getElementById('modalInput').value = showVal || '';
   document.getElementById('editModal').classList.add('show');
@@ -394,6 +428,7 @@ function selectCar(car){
 
   // 显示详情区
   document.getElementById('carListView').style.display = 'none';
+  document.getElementById('tabBar').style.display = 'flex';
   document.querySelector('.result-box').style.display = 'block';
   document.querySelector('.detail-section').style.display = 'block';
   document.querySelector('.bottom-action').style.display = 'block';
@@ -407,6 +442,7 @@ function selectCar(car){
 function showCarList(){
   document.getElementById('carListView').style.display = 'block';
   document.getElementById('carHeader').style.display = 'none';
+  document.getElementById('tabBar').style.display = 'none';
   document.querySelector('.result-box').style.display = 'none';
   document.querySelector('.detail-section').style.display = 'none';
   document.querySelector('.bottom-action').style.display = 'none';
