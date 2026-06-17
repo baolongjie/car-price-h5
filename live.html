@@ -446,7 +446,7 @@ function loadCloudData(){
     .then(function(res){ if(!res.ok) throw new Error('HTTP '+res.status); return res.json(); })
     .then(function(json){
       if(!json || !Array.isArray(json) || json.length === 0) throw new Error('数据为空');
-      allCars = json;
+      allCars = json.filter(function(item){ return (item['品牌']||'') !== '方程豹'; });
       renderCarList(allCars);
       
       // 默认隐藏详情，显示列表
